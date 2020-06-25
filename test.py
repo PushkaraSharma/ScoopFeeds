@@ -9,10 +9,11 @@ Created on Thu Jun 25 11:57:34 2020
 
 #import json
 import requests
-url='http://127.0.0.1:5000/top_stories/'
+from requests_toolbelt.utils import dump
+url='http://127.0.0.1:8000/top_stories/'
 r = requests.get(url)
-print(r)
-
+data = dump.dump_all(r)
+print(data.decode('utf-8'))
 
 
 

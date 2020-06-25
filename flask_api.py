@@ -15,7 +15,7 @@ device = torch.device('cpu')
 def summarizer(input):
     preprocess_text = input.strip().replace("\n",'')
     t5_prepared_text = "summarize: "+preprocess_text
-    print("Original text after Preprocessing: \n",preprocess_text)
+    #print("Original text after Preprocessing: \n",preprocess_text)
     tokenzid_text = tokenizer.encode(t5_prepared_text,return_tensors="pt").to(device)
     
     summary_ids = model.generate(tokenzid_text,num_beams=4,no_repeat_ngram_size=2,min_length=10,max_length=80,early_stopping=True)
@@ -26,13 +26,12 @@ def summarizer(input):
 @app.route('/top_stories/',methods=['GET'])
 
 
-
-def scrap():
-    
+def scrap():    
     
     with open('data.txt') as f:
          data = json.load(f)
     d1 = json.loads(data)
+    print("++++++++",d1)
     first = (next(iter(d1)))
     print(first)
     
@@ -53,8 +52,8 @@ def scrap():
         # return the same file
         print(head.text)
         if(head.text==first and i==0):
-            print("+++++++++++Same+++++++++++++++")
-            return jsonify(d1)
+            d1 = json.dumps(d1)
+            return (d1)
             
         headings.append(head.text)
 
@@ -69,17 +68,17 @@ def scrap():
     for i in range(len(headings)):
         final_data.update({headings[i]:summaries[i]})
     jsonData = json.dumps(final_data)
-    #print(jsonData)
+
     with open('data.txt', 'w') as outfile:
          json.dump(jsonData, outfile)
-    return jsonify(jsonData)
+    return (jsonData)
 
 @app.route('/')
 def index():
     return "<h1>READ_RUN</h1>"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=8000,debug=True)
     
 #d = scrap()
 #print(d)
