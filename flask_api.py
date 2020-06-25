@@ -6,7 +6,7 @@ from transformers import T5Tokenizer,T5ForConditionalGeneration,T5Config
 import urllib.request as url
 import bs4
 
-#app = Flask(__name__)
+app = Flask(__name__)
 
 model = T5ForConditionalGeneration.from_pretrained('t5-small')
 tokenizer = T5Tokenizer.from_pretrained('t5-small')
@@ -23,7 +23,7 @@ def summarizer(input):
     return output
 
 
-#@app.route('/top_stories/',methods=['POST'])
+@app.route('/top_stories/',methods=['GET'])
 
 def scrap():
     web = url.urlopen("https://www.indiatoday.in/top-stories")
@@ -53,11 +53,11 @@ def scrap():
     print(jsonData)
     with open('data.txt', 'w') as outfile:
          json.dump(jsonData, outfile)
-    #return jsonify(jsonData)
-#@app.route('/')
-#def index():
-#    return "<h1>READ_RUN</h1>"
+    return jsonify(jsonData)
+@app.route('/')
+def index():
+    return "<h1>READ_RUN</h1>"
 
-#if __name__ == "__main__":
-#    app.run(debug=True)
-scrap()
+if __name__ == "__main__":
+    app.run(debug=True)
+#scrap()
