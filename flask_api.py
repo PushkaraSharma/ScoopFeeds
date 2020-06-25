@@ -1,8 +1,8 @@
-from flask import Flask,jsonify,request,abort
-import _pickle as pickle
+from flask import Flask,jsonify
+#import _pickle as pickle
 import torch
 import json
-from transformers import T5Tokenizer,T5ForConditionalGeneration,T5Config
+from transformers import T5Tokenizer,T5ForConditionalGeneration
 import urllib.request as url
 import bs4
 
@@ -25,7 +25,17 @@ def summarizer(input):
 
 @app.route('/top_stories/',methods=['GET'])
 
+
+
 def scrap():
+    
+    
+    with open('data.txt') as f:
+         data = json.load(f)
+    d1 = json.loads(data)
+    first = (next(iter(d1)))
+    print(first)
+    
     web = url.urlopen("https://www.indiatoday.in/top-stories")
     page1 = bs4.BeautifulSoup(web,'lxml')
     b = page1.find('div',class_='view-content')
@@ -38,8 +48,17 @@ def scrap():
     for i in range(len(temp_hrefs)):
         new_web =  url.urlopen("https://www.indiatoday.in"+temp_hrefs[i])
         new_page = bs4.BeautifulSoup(new_web,'lxml')
-        head = new_page.find('h1',itemprop = 'headline')
+        head = new_page.find('h1',itemprop = 'headline')   
+        #implement to check if heading is same as before so no processing just 
+        # return the same file
+        print(head.text)
+        if(head.text==first and i==0):
+            print("+++++++++++Same+++++++++++++++")
+            return jsonify(d1)
+            
         headings.append(head.text)
+
+        
         newss = new_page.find('div',itemprop='articleBody')
         f_news = (newss.text[:-100])
         news.append(f_news)
@@ -50,14 +69,17 @@ def scrap():
     for i in range(len(headings)):
         final_data.update({headings[i]:summaries[i]})
     jsonData = json.dumps(final_data)
-    print(jsonData)
+    #print(jsonData)
     with open('data.txt', 'w') as outfile:
          json.dump(jsonData, outfile)
     return jsonify(jsonData)
+
 @app.route('/')
 def index():
     return "<h1>READ_RUN</h1>"
 
 if __name__ == "__main__":
     app.run(debug=True)
-#scrap()
+    
+#d = scrap()
+#print(d)
