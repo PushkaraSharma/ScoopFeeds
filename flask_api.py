@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jun 26 22:36:15 2020
+
+@author: pushkara
+"""
+
+
 from flask import Flask,jsonify
 #import _pickle as pickle
 import torch
@@ -31,9 +40,8 @@ def scrap():
     with open('data.json') as f:
          data = json.load(f)
     d1 = json.loads(data)
-    print("++++++++",d1)
     first = (next(iter(d1)))
-    print(first)
+    print("HEading from json:\n",first)
     
     web = url.urlopen("https://www.indiatoday.in/top-stories")
     page1 = bs4.BeautifulSoup(web,'lxml')
@@ -42,35 +50,36 @@ def scrap():
     for a in b.find_all('a',href =True):
         g =(a['href'])
         temp_hrefs.append(g)
-    headings = []
-    news = []
+    d2 = {}
     for i in range(len(temp_hrefs)):
         new_web =  url.urlopen("https://www.indiatoday.in"+temp_hrefs[i])
         new_page = bs4.BeautifulSoup(new_web,'lxml')
-        head = new_page.find('h1',itemprop = 'headline')   
-        #implement to check if heading is same as before so no processing just 
-        # return the same file
-        print(head.text)
-        if(head.text==first and i==0):
-            d1 = json.dumps(d1)
-            return (d1)
-            
-        headings.append(head.text)
-
+        head = new_page.find('h1',itemprop = 'headline') 
         
+        #implementation to only scrap and process those news which afre fresh
+        #and are not in our top 10 stories
+        
+        print("Heading from scrap:\n",head.text)
+        if(head.text==first):
+            print("EQUAL")
+            break
+            
         newss = new_page.find('div',itemprop='articleBody')
-        f_news = (newss.text[:-100])
-        news.append(f_news)
-    summaries = []
-    for i in news:
-        summaries.append(summarizer(i))
-    final_data = {}
-    for i in range(len(headings)):
-        final_data.update({headings[i]:summaries[i]})
-    jsonData = json.dumps(final_data)
+        f_news = newss.text
+        temp = f_news.split()
+        temp = temp[:374]
+        f_news = ' '.join(temp)
 
+        summary_gen = summarizer(f_news)
+        d2.update({head.text:summary_gen})
+    
+    d3 = dict(d2) 
+    d3.update(d1)  
+    d3 = {k: d3[k] for k in list(d3)[:10]}     
+    jsonData = json.dumps(d3)
+    
     with open('data.json', 'w') as outfile:
-         json.dump(jsonData, outfile)
+        json.dump(jsonData, outfile)
     return (jsonData)
 
 @app.route('/')
