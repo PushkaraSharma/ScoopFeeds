@@ -35,6 +35,7 @@ def scrap(url_,file_name):
     
     d2 = {}
     for i in range(len(temp_hrefs)):
+        
         try:
             new_web =  url.urlopen("https://www.indiatoday.in"+temp_hrefs[i])
             new_page = bs4.BeautifulSoup(new_web,'lxml')
@@ -46,7 +47,7 @@ def scrap(url_,file_name):
             
             print("Heading from scrap:\n",head.text)
             if(head.text==first):
-                print("EQUAL")
+                print("\n+++++EQUAL+++++++++++++++++\n")
                 break
             pic_link = new_page.find('img', itemprop='contentUrl')
             pics = pic_link['data-src']   
@@ -61,7 +62,7 @@ def scrap(url_,file_name):
             f_news = ' '.join(temp)
             
     
-            summary_gen = summarizer.summary_gen(f_news)
+            summary_gen = summarizer.summarizer_gen(f_news)
             d2.update({head.text:[summary_gen,pics]})
         except:
             print("Some Internal Error in top stories section")
@@ -110,7 +111,7 @@ def scrap_sports(url_,file_name):
             
             print("Heading from scrap:\n",head)
             if(head==first):
-                print("EQUAL")
+                print("\n+++++EQUAL+++++++++++++++++\n")
                 break
             pic_link = new_page.find('img', itemprop='contentUrl')
             pics = pic_link['data-src']   
@@ -176,7 +177,7 @@ def scrap_gaming(url_,file_name):
             
             print("Heading from scrap:\n",head)
             if(head==first):
-                print("EQUAL")
+                print("\n+++++EQUAL+++++++++++++++++\n")
                 break
             pic_link = new_page.find('img', class_='block-image-ads hero-image')
             pics = pic_link['src']   

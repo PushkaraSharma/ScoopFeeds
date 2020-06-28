@@ -20,7 +20,7 @@ def process_news():
     background_job_process.scrap_sports('https://www.indiatoday.in/sports','data_sports.json')
     
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(process_news,'interval',minutes=15)
+sched.add_job(process_news,'interval',minutes=10)
 sched.start()
 atexit.register(lambda: sched.shutdown())
 
@@ -29,7 +29,7 @@ def process_news2():
     background_job_process.scrap_gaming('https://www.gamesradar.com/news/','data_gaming.json')
 
 sched2 = BackgroundScheduler(daemon=True)
-sched2.add_job(process_news,'interval',minutes=50)
+sched2.add_job(process_news2,'interval',minutes=120)
 sched2.start()
 atexit.register(lambda: sched2.shutdown())
 
