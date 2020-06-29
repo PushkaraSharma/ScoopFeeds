@@ -13,14 +13,12 @@ import bs4
 import summarizer
 
 
-
-
 def scrap(url_,file_name):    
     
     with open(file_name) as f:
          data = json.load(f)
     d1 = json.loads(data)
-    first = (next(iter(d1)))
+    first = (next(iter(d1))).encode('ascii', 'replace').decode()
     print("Heading from json:\n",first)
 
     web = url.urlopen(url_)
@@ -44,9 +42,9 @@ def scrap(url_,file_name):
                 continue
             #implementation to only scrap and process those news which afre fresh
             #and are not in our top 10 stories
-            
-            print("Heading from scrap:\n",head.text)
-            if(head.text==first):
+            head = head.text.encode('ascii', 'replace').decode()
+            print("Heading from scrap:\n",head)
+            if(head==first):
                 print("\n+++++EQUAL+++++++++++++++++\n")
                 break
             pic_link = new_page.find('img', itemprop='contentUrl')
@@ -56,14 +54,14 @@ def scrap(url_,file_name):
             newss = new_page.find('div',itemprop='articleBody')
             if(newss is None):
                 continue
-            f_news = newss.text
+            f_news = newss.text.encode('ascii', 'replace').decode()
             temp = f_news.split()
             temp = temp[:374]
             f_news = ' '.join(temp)
             
     
             summary_gen = summarizer.summarizer_gen(f_news)
-            d2.update({head.text:[summary_gen,pics]})
+            d2.update({head:[summary_gen,pics]})
         except:
             print("Some Internal Error in top stories section")
     d3 = dict(d2) 
@@ -80,7 +78,7 @@ def scrap_sports(url_,file_name):
     with open(file_name) as f:
          data = json.load(f)
     d1 = json.loads(data)
-    first = (next(iter(d1)))
+    first = (next(iter(d1))).encode('ascii', 'replace').decode()
     print("Heading from json:\n",first)
 
     web = url.urlopen(url_)
@@ -103,7 +101,7 @@ def scrap_sports(url_,file_name):
         
             new_web =  url.urlopen("https://www.indiatoday.in"+temp_hrefs[i])
             new_page = bs4.BeautifulSoup(new_web,'lxml')
-            head = headings[i]
+            head = headings[i].encode('ascii', 'replace').decode()
             if(head is None):
                 continue
             #implementation to only scrap and process those news which afre fresh
@@ -120,7 +118,7 @@ def scrap_sports(url_,file_name):
             newss = new_page.find('div',itemprop='articleBody')
             if(newss is None):
                 continue
-            f_news = newss.text
+            f_news = newss.text.encode('ascii', 'replace').decode()
             temp = f_news.split()
             temp = temp[:374]
             f_news = ' '.join(temp)
@@ -146,7 +144,7 @@ def scrap_gaming(url_,file_name):
     with open(file_name) as f:
          data = json.load(f)
     d1 = json.loads(data)
-    first = (next(iter(d1)))
+    first = (next(iter(d1))).encode('ascii', 'replace').decode()
     print("Heading from json:\n",first)
 
     web = url.urlopen(url_)
@@ -169,7 +167,7 @@ def scrap_gaming(url_,file_name):
         
             new_web =  url.urlopen(temp_hrefs[i])
             new_page = bs4.BeautifulSoup(new_web,'lxml')
-            head = new_page.find('h1').text
+            head = new_page.find('h1').text.encode('ascii', 'replace').decode()
             if(head is None):
                 continue
             #implementation to only scrap and process those news which afre fresh
@@ -186,7 +184,7 @@ def scrap_gaming(url_,file_name):
             newss = new_page.find('div',class_='text-copy bodyCopy auto')
             if(newss is None):
                 continue
-            f_news = newss.text
+            f_news = newss.text.encode('ascii', 'replace').decode()
             temp = f_news.split()
             temp = temp[:374]
             f_news = ' '.join(temp)
