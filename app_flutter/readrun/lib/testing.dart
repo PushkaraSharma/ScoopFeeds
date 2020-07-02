@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class MainFetchData extends StatefulWidget {
   @override
-  _MainFetchDataState createState() => _MainFetchDataState();
+  _MainFetchDataState createState() => new _MainFetchDataState();
 }
 
 class _MainFetchDataState extends State<MainFetchData> {
@@ -17,10 +17,10 @@ class _MainFetchDataState extends State<MainFetchData> {
     setState(() {
       isLoading = true;
     });
-    final response =
-    await http.get("https://34.69.43.210:5000/");
+    final response = await http.get("http://35.226.196.3:5000/top_stories/");
     if (response.statusCode == 200) {
-      list = (json.decode(response.body) as List);
+      var jsondata = json.decode(response.body);
+      print(jsondata);
       setState(() {
         isLoading = false;
       });
