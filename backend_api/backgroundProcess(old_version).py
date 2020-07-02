@@ -1,30 +1,17 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul  2 17:53:35 2020
-
-@author: pushkara
-"""
-
-
 import json
 import urllib.request as url
 import bs4
 import summarizer
-import pandas as pd
 
 
-def scrap(url_):    
+def scrap(url_,file_name):    
     
-# =============================================================================
-#     with open(file_name) as f:
-#          data = json.load(f)
-#     d1 = json.loads(data)
-#     first = (next(iter(d1))).encode('ascii', 'replace').decode()
-#     print("Heading from json:\n",first)
-# 
-# =============================================================================
-    first  = 'hey'
+    with open(file_name) as f:
+         data = json.load(f)
+    d1 = json.loads(data)
+    first = (next(iter(d1))).encode('ascii', 'replace').decode()
+    print("Heading from json:\n",first)
+
     web = url.urlopen(url_)
     page1 = bs4.BeautifulSoup(web,'lxml')
     b = page1.find('div',class_='view-content')
@@ -35,48 +22,48 @@ def scrap(url_):
         
     print("TOTAL NEWS:",len(temp_hrefs))
     
-    df = pd.DataFrame()
-    cols = ['heading','summary','picture']
-    
+    d2 = {}
     for i in range(len(temp_hrefs)):
         
-        
-        new_web =  url.urlopen("https://www.indiatoday.in"+temp_hrefs[i])
-        new_page = bs4.BeautifulSoup(new_web,'lxml')
-        head = new_page.find('h1',itemprop = 'headline') 
-        if(head is None):
-            continue
-        #implementation to only scrap and process those news which afre fresh
-        #and are not in our top 10 stories
-        head = head.text.encode('ascii', 'replace').decode()
-        print("Heading from scrap:\n",head)
-        if(head==first):
-            print("\n+++++EQUAL+++++++++++++++++\n")
-            break
-        pic_link = new_page.find('img', itemprop='contentUrl')
-        pics = pic_link['data-src']   
-        if(pics is None):
-            continue
-        newss = new_page.find('div',itemprop='articleBody')
-        if(newss is None):
-            continue
-        f_news = newss.text.encode('ascii', 'replace').decode()
-        temp = f_news.split()
-        temp = temp[:374]
-        f_news = ' '.join(temp)
-        
-
-        summary_gen = summarizer.summarizer_gen(f_news)
-        df = df.append(pd.DataFrame([[head,summary_gen,pics]],columns=cols))
-
-        print(df)
-
-    #d3 = dict(d2) 
-    #d3.update(d1)  
-    #d3 = {k: d3[k] for k in list(d3)[:10]} 
-
-    df.to_json('tech_new.json',orient='records')
+        try:
+            new_web =  url.urlopen("https://www.indiatoday.in"+temp_hrefs[i])
+            new_page = bs4.BeautifulSoup(new_web,'lxml')
+            head = new_page.find('h1',itemprop = 'headline') 
+            if(head is None):
+                continue
+            #implementation to only scrap and process those news which afre fresh
+            #and are not in our top 10 stories
+            head = head.text.encode('ascii', 'replace').decode()
+            print("Heading from scrap:\n",head)
+            if(head==first):
+                print("\n+++++EQUAL+++++++++++++++++\n")
+                break
+            pic_link = new_page.find('img', itemprop='contentUrl')
+            pics = pic_link['data-src']   
+            if(pics is None):
+                continue
+            newss = new_page.find('div',itemprop='articleBody')
+            if(newss is None):
+                continue
+            f_news = newss.text.encode('ascii', 'replace').decode()
+            temp = f_news.split()
+            temp = temp[:374]
+            f_news = ' '.join(temp)
+            
     
+            summary_gen = summarizer.summarizer_gen(f_news)
+            d2.update({head:[summary_gen,pics]})
+        except:
+            print("Some Internal Error in top stories section")
+    d3 = dict(d2) 
+    d3.update(d1)  
+    d3 = {k: d3[k] for k in list(d3)[:10]}     
+    jsonData = json.dumps(d3)
+    
+    with open(file_name, 'w') as outfile:
+        json.dump(jsonData, outfile)
+    #return (jsonData)
+
 def scrap_sports(url_,file_name):    
     
     with open(file_name) as f:

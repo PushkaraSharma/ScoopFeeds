@@ -12,6 +12,7 @@ import json
 import background_job_process
 from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
+import pandas as pd
 
 def process_news():
     print("Scheduler is alive!")
@@ -29,7 +30,7 @@ def process_news2():
     background_job_process.scrap_gaming('https://www.gamesradar.com/news/','gaming_new.json')
 
 sched2 = BackgroundScheduler(daemon=True)
-sched2.add_job(process_news2,'interval',minutes=120)
+sched2.add_job(process_news2,'interval',minutes=60)
 sched2.start()
 atexit.register(lambda: sched2.shutdown())
 
@@ -39,39 +40,32 @@ app = Flask(__name__)
 @app.route('/top_stories/',methods=['GET'])
 def top_stories_to_user():    
     
-    with open('data_top_stories.json') as f:
-         data = json.load(f)
-    d1 = json.loads(data)
-    jsonData = json.dumps(d1)
-    return (jsonData)
+    data = pd.read_json('top_stories.json')
+    data  = data.to_json(orient='records')
+    return data
+
 
 
 @app.route('/tech/',methods=['GET'])
 def tech_to_user():    
     
-    with open('data_tech.json') as f:
-         data = json.load(f)
-    d1 = json.loads(data)
-    jsonData = json.dumps(d1)
-    return (jsonData)
+    data = pd.read_json('tech_new.json')
+    data  = data.to_json(orient='records')
+    return data
 
 @app.route('/sports/',methods=['GET'])
 def sports_to_user():    
     
-    with open('data_sports.json') as f:
-         data = json.load(f)
-    d1 = json.loads(data)
-    jsonData = json.dumps(d1)
-    return (jsonData)
+    data = pd.read_json('sports_new.json')
+    data  = data.to_json(orient='records')
+    return data
 
 @app.route('/gaming/',methods=['GET'])
 def gaming_to_user():    
     
-    with open('data_gaming.json') as f:
-         data = json.load(f)
-    d1 = json.loads(data)
-    jsonData = json.dumps(d1)
-    return (jsonData)
+    data = pd.read_json('gaming_new.json')
+    data  = data.to_json(orient='records')
+    return data
 
 
 @app.route('/')
