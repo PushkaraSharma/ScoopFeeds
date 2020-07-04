@@ -8,7 +8,7 @@ Created on Fri Jun 26 22:36:15 2020
 
 
 from flask import Flask
-import json
+#import json
 import background_job_process
 from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
@@ -21,7 +21,7 @@ def process_news():
     background_job_process.scrap_sports('https://www.indiatoday.in/sports','sports_new.json')
     
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(process_news,'interval',minutes=8)
+sched.add_job(process_news,'interval',minutes=1)
 sched.start()
 atexit.register(lambda: sched.shutdown())
 

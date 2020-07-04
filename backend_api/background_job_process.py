@@ -64,10 +64,11 @@ def scrap(url_,file_name):
             if(newss is None):
                 continue
             f_news = newss.text.encode('ascii', 'replace').decode()
-            temp = f_news.split()
-            temp = temp[:374]
-            f_news = ' '.join(temp)
-            
+            for i in range(len(f_news)):
+                if(f_news[i]=='R' and f_news[i+1]=='E' and f_news[i+2]=='A' and f_news[i+3]=='D'):
+                    f_news = f_news[:i]
+                    break
+        
     
             summary_gen = summarizer.summarizer_gen(f_news)
             df = df.append(pd.DataFrame([[head,summary_gen,pics]],columns=cols))
