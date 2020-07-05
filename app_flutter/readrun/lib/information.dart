@@ -102,7 +102,7 @@ class _InformationState extends State<Information> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
                 boxShadow: [BoxShadow(
-                    color: Colors.black.withAlpha(90),
+                    color: Color(0xffFF9D63),
                     blurRadius: 12.0, spreadRadius: 4.0,
                     offset: Offset(0.0, 3.0,),
                   ),
