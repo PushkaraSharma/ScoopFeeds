@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:math';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:readrun/information.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +13,38 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
+  _buildCard({Config config, Color backgroundColor = Colors.transparent}) {
+    return Container(
+      color: Colors.transparent,
+      height: 80,
+      width: double.infinity,
+        child: WaveWidget(
+          config: config,
+          backgroundColor: backgroundColor,
+          size: Size(double.infinity, double.infinity),
+          waveAmplitude: 5,
+        ),
+    );
+  }
+
+  MaskFilter _blur;
+  final List<MaskFilter> _blurs = [
+    null,
+    MaskFilter.blur(BlurStyle.normal, 10.0),
+    MaskFilter.blur(BlurStyle.inner, 10.0),
+    MaskFilter.blur(BlurStyle.outer, 10.0),
+    MaskFilter.blur(BlurStyle.solid, 16.0),
+  ];
+  int _blurIndex = 0;
+  MaskFilter _nextBlur() {
+    if (_blurIndex == _blurs.length - 1) {
+      _blurIndex = 0;
+    } else {
+      _blurIndex = _blurIndex + 1;
+    }
+    _blur = _blurs[_blurIndex];
+    return _blurs[_blurIndex];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +54,41 @@ class _StartScreenState extends State<StartScreen> {
       home: Scaffold(
         body:  Column(
           children: <Widget>[
-            Container(padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-              height: height*0.35,width:width,
-              decoration: BoxDecoration(
-                color: Color(0xffFF9D63),
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(160),bottomRight: Radius.circular(160)),
-                  boxShadow: [BoxShadow(
-                    color: Colors.black,
-                    blurRadius: 12.0, spreadRadius: 4.0,
-                    offset: Offset(0.0, 3.0,),
-                  ),
-                  ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Container(padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              //height: height*0.397,width:width,
+              color: Color(0xffFF9D63),
+              child: Column(
                 children: <Widget>[
-                  Text('WEE',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,)),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text('WEE',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,)),),
 
-                  Image(image: AssetImage('assets/images/1.gif'),width: 100,height: 220,
-                      fit: BoxFit.fitHeight,
+                      Image(image: AssetImage('assets/images/1.gif'),width: 100,height: 200,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      Text('READ',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,))),
+
+                    ],
+                  ),
+                  _buildCard(
+                    config: CustomConfig(
+                      colors: [
+                        Colors.pink[400],
+                        Colors.pink[300],
+                        Colors.pink[200],
+                        Colors.white
+                      ],
+                      durations: [35000, 19440, 10800, 10000],
+                      heightPercentages: [0.20, 0.23, 0.30, 0.70],
+                      blur: _blur,
                     ),
-                  Text('READ',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,))),
-
+                  ),
                 ],
               ),
             ),
+
+
             Container(padding: EdgeInsets.all(15),alignment: Alignment.centerLeft,
             child: Text("Choose Categories",style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 25.0,color: Colors.black,)),
               )),
