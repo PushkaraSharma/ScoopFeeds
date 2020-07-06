@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
@@ -99,34 +100,27 @@ class _InformationState extends State<Information> {
         children: <Widget>[
           Container(
             height: height*0.5,width:width,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
-                boxShadow: [BoxShadow(
-                    color: Color(0xffFF9D63),
-                    blurRadius: 12.0, spreadRadius: 4.0,
-                    offset: Offset(0.0, 3.0,),
+              child: ClipPath(
+                clipper: ClippingClass(),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: NetworkImage(data.picUrl)),
                   ),
-                ]),
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0)),
-              child: new Image.network(
-                data.picUrl,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
+                ),
+              ),),
           new Padding(
             padding: new EdgeInsets.fromLTRB(12.0,18.0,12.0,10.0),
             child: new Text(
-              data.heading,textAlign: TextAlign.justify,
-              style: GoogleFonts.roboto(textStyle: TextStyle(color: Colors.black,fontSize: 23,fontWeight: FontWeight.w700,decoration: TextDecoration.none,)),
+              data.heading,textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.black,fontSize: 23,fontWeight: FontWeight.w700,decoration: TextDecoration.none,fontFamily: 'CharterITC'),
             ),
           ),
           new Padding(
               padding: new EdgeInsets.fromLTRB(18,18,18,5),
-              child: new Text(
+              child: new AutoSizeText(
                 data.summary,textAlign: TextAlign.justify,
-                style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 17.0,color: Colors.black,decoration: TextDecoration.none,fontWeight: FontWeight.w300)),
+                maxLines: 9,
+                style: TextStyle(fontSize: 17.0,color: Colors.black,decoration: TextDecoration.none,fontFamily: 'KievitOT',fontWeight: FontWeight.w300),
               ))
         ],
       ),
@@ -141,3 +135,20 @@ class _InformationState extends State<Information> {
 
 }
 
+class ClippingClass extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0.0, size.height-40);
+    path.quadraticBezierTo(size.width / 4, size.height,
+        size.width / 2, size.height);
+    path.quadraticBezierTo(size.width - (size.width / 4), size.height,
+        size.width, size.height - 40);
+    path.lineTo(size.width, 0.0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}

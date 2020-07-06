@@ -59,6 +59,7 @@ flutter:
    - assets/images/undraw_around_the_world_v9nu.png
    - assets/images/undraw_city_driver_jh2h.png
    - assets/images/undraw_healthy_habit_bh5w.png
+   - assets/images/fashion_pic.png
    - assets/images/1.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -72,17 +73,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+  fonts:
+     - family: CharterITC
+       fonts:
+         - asset: fonts/CharterITC-Regu.ttf
+     - family: KievitOT
+       fonts:
+         - asset: fonts/KievitOT-Medium.ttf
+
+
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

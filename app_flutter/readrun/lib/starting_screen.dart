@@ -1,3 +1,5 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -16,13 +18,13 @@ class _StartScreenState extends State<StartScreen> {
   _buildCard({Config config, Color backgroundColor = Colors.transparent}) {
     return Container(
       color: Colors.transparent,
-      height: 80,
+      height: 60,
       width: double.infinity,
         child: WaveWidget(
           config: config,
           backgroundColor: backgroundColor,
           size: Size(double.infinity, double.infinity),
-          waveAmplitude: 5,
+          waveAmplitude: 6,
         ),
     );
   }
@@ -35,7 +37,7 @@ class _StartScreenState extends State<StartScreen> {
     MaskFilter.blur(BlurStyle.outer, 10.0),
     MaskFilter.blur(BlurStyle.solid, 16.0),
   ];
-  int _blurIndex = 0;
+  int _blurIndex = 3;
   MaskFilter _nextBlur() {
     if (_blurIndex == _blurs.length - 1) {
       _blurIndex = 0;
@@ -50,37 +52,63 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    _nextBlur();
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         body:  Column(
           children: <Widget>[
             Container(padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              //height: height*0.397,width:width,
-              color: Color(0xffFF9D63),
+              //height: height*0.3,width:width,
+              color: Color(0xffFFBD95),
               child: Column(
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text('WEE',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,)),),
-
-                      Image(image: AssetImage('assets/images/1.gif'),width: 100,height: 200,
-                          fit: BoxFit.fitHeight,
+                      //Text('WEE',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,)),),
+                ColorizeAnimatedTextKit(
+                    repeatForever: true,
+                    text: ["SCOOP",'SHORT '],
+                    speed: Duration(milliseconds: 1200),
+                    textStyle: TextStyle(fontSize: 44.0, fontFamily: 'CharterITC',fontWeight: FontWeight.bold),
+                    colors: [
+                      Colors.black,
+                      Colors.white,
+                      Colors.black,
+                      Colors.white,
+                    ],
+                    textAlign: TextAlign.start,
+                    alignment: AlignmentDirectional.topStart // or Alignment.topLeft
+                ),
+                  Image(image: AssetImage('assets/images/1.gif'),width: 80,height: 160,
+                    fit: BoxFit.fitHeight,),
+                  ColorizeAnimatedTextKit(
+                          repeatForever: true,
+                      speed: Duration(milliseconds: 1200),
+                            text: ["FEEDS","READ "],
+                            textStyle: TextStyle(fontSize: 44.0, fontFamily: 'CharterITC',fontWeight: FontWeight.bold),
+                            colors: [
+                              Colors.black,
+                              Colors.white,
+                              Colors.black,
+                              Colors.white,
+                            ],
+                            textAlign: TextAlign.start,
+                            alignment: AlignmentDirectional.topStart // or Alignment.topLeft
                         ),
-                      Text('READ',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,))),
-
                     ],
                   ),
                   _buildCard(
                     config: CustomConfig(
                       colors: [
-                        Colors.pink[400],
-                        Colors.pink[300],
-                        Colors.pink[200],
+                        Colors.grey[600],
+                        Colors.grey[300],
+                        Color(0xffFFDDC8),
                         Colors.white
                       ],
                       durations: [35000, 19440, 10800, 10000],
-                      heightPercentages: [0.20, 0.23, 0.30, 0.70],
+                      heightPercentages: [0.20, 0.23, 0.30, 0.60],
                       blur: _blur,
                     ),
                   ),
@@ -90,7 +118,8 @@ class _StartScreenState extends State<StartScreen> {
 
 
             Container(padding: EdgeInsets.all(15),alignment: Alignment.centerLeft,
-            child: Text("Choose Categories",style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 25.0,color: Colors.black,)),
+            color: Colors.white,
+            child: Text("Choose Category",style: TextStyle(fontSize: 25.0,color: Colors.black,fontFamily: 'KievitOT'),
               )),
             Expanded(
               child: StaggeredGridView.count(
@@ -99,11 +128,12 @@ class _StartScreenState extends State<StartScreen> {
                       mainAxisSpacing: 15.0,
                       padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
                       children: <Widget>[
+
                         myitems('Top Stories','assets/images/undraw_newspaper_k72w.png',Information(topic:"top_stories")),
                         myitems('Sports','assets/images/undraw_track_and_field_33qn.png' ,Information(topic:"sports")),
                         myitems('Technology','assets/images/undraw_visionary_technology_33jy.png',Information(topic:"tech")),
                         myitems('Gaming','assets/images/undraw_gaming_6oy3.png',Information(topic: "gaming",)),
-                        myitems('Fashion','assets/images/undraw_newspaper_k72w.png', Information(topic: "gaming",)),
+                        myitems('Fashion','assets/images/fashion_pic.png', Information(topic: "gaming",)),
                         myitems('Automobile', 'assets/images/undraw_city_driver_jh2h.png',Information(topic: "gaming",)),
                         myitems('International','assets/images/undraw_around_the_world_v9nu.png', Information(topic: "gaming",)),
                         myitems('Lifestyle','assets/images/undraw_healthy_habit_bh5w.png', Information(topic: "gaming",)),
