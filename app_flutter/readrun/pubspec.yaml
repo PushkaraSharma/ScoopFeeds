@@ -61,6 +61,7 @@ flutter:
    - assets/images/undraw_healthy_habit_bh5w.png
    - assets/images/fashion_pic.png
    - assets/images/1.gif
+   - assets/images/dribble-guy-cloud-800x600.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

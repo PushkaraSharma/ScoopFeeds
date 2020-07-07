@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
 import 'package:readrun/News.dart';
+import 'package:readrun/Fetching_news_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'dart:io';
 //import 'dart:async';
@@ -62,9 +63,11 @@ class _InformationState extends State<Information> {
 
   @override
   Widget build(BuildContext context) {
+    print(list.isEmpty);
 
-
-    return PageView.builder(
+    return list.isEmpty
+        ? FetchingNews()
+        : PageView.builder(
 
         controller: ctrl,
         itemCount: list.length,
