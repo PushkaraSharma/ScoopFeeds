@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:readrun/News.dart';
 import 'package:readrun/Fetching_news_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'dart:io';
-//import 'dart:async';
+import 'package:readrun/starting_screen.dart';
 
 class Information extends StatefulWidget {
   final String topic;
@@ -67,22 +66,29 @@ class _InformationState extends State<Information> {
 
     return list.isEmpty
         ? FetchingNews()
-        : PageView.builder(
+        : PageView(
+        reverse: true,
+        pageSnapping: true,
+        children: <Widget>[
+        PageView.builder(
 
-        controller: ctrl,
-        itemCount: list.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, int currentIdx) {
-          if (currentIdx == list.length-1) {
-            print("all over");
-            return _buildEndPage(); ;
-          } else if (list.length >= currentIdx) {
-            // Active page
-            bool active = currentIdx == currentPage;
-            return _buildStoryPage(list[currentIdx ], active);
+          controller: ctrl,
+          itemCount: list.length,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, int currentIdx) {
+            if (currentIdx == list.length-1) {
+              print("all over");
+              return _buildEndPage(); ;
+            } else if (list.length >= currentIdx) {
+              // Active page
+              bool active = currentIdx == currentPage;
+              return _buildStoryPage(list[currentIdx ], active);
+            }
           }
-        }
-    );
+    ),
+      StartScreen()
+    ]
+        );
   }
 
   // Builder Functions
@@ -95,22 +101,23 @@ class _InformationState extends State<Information> {
     final height = MediaQuery.of(context).size.height;
 
     return AnimatedContainer(
-        duration: Duration(milliseconds: 800),
-        curve: Curves.bounceInOut,
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.easeInCirc,
         //margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
       color: Colors.white,
-      child: new Column(
+      child: Stack(children: <Widget>[
+        Column(
         children: <Widget>[
           Container(
             height: height*0.5,width:width,
-              child: ClipPath(
-                clipper: ClippingClass(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: NetworkImage(data.picUrl)),
-                  ),
+            child: ClipPath(
+              clipper: ClippingClass(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: NetworkImage(data.picUrl)),
                 ),
-              ),),
+              ),
+            ),),
           new Padding(
             padding: new EdgeInsets.fromLTRB(12.0,18.0,12.0,10.0),
             child: new Text(
@@ -127,13 +134,58 @@ class _InformationState extends State<Information> {
               ))
         ],
       ),
+        Positioned(
+            top: 25,
+            left: 2.0,
+
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(width: 18.0, color: Colors.white),),
+              child: Icon(Icons.refresh,
+                  color:  Colors.black,
+                  size: 28.0),
+            )
+        ),
+      ]
+
+      ),
     );
   }
   _buildEndPage(){
     return Container(color: Colors.white,
-      child: Center(child:
-        Text("No More News"),),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+              Container(
+                child: Image.asset("assets/images/2.gif"),
+              ),
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            Text(
+              "You have read all Stories",
+              style: TextStyle(fontSize: 20.0, color: Colors.black,fontFamily: 'KievitOT',decoration: TextDecoration.none,fontWeight: FontWeight.w400),
+            ),
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            Container(width: 140,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+                onPressed: (){},
+                child: Row(children: <Widget>[
+                  Icon(Icons.refresh),
+                  SizedBox(width: 10,),
+                  Text("Refresh",style: TextStyle(fontFamily: 'KievitOT',),)
+                ],),
+                color: Colors.white,
+                elevation: 5,
+              ),
+            )
+          ],
+        ),
+      ),
     );
+
   }
 
 }

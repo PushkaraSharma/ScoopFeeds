@@ -20,12 +20,12 @@ class _StartScreenState extends State<StartScreen> {
       color: Colors.transparent,
       height: 60,
       width: double.infinity,
-        child: WaveWidget(
-          config: config,
-          backgroundColor: backgroundColor,
-          size: Size(double.infinity, double.infinity),
-          waveAmplitude: 6,
-        ),
+      child: WaveWidget(
+        config: config,
+        backgroundColor: backgroundColor,
+        size: Size(double.infinity, double.infinity),
+        waveAmplitude: 6,
+      ),
     );
   }
 
@@ -38,6 +38,7 @@ class _StartScreenState extends State<StartScreen> {
     MaskFilter.blur(BlurStyle.solid, 16.0),
   ];
   int _blurIndex = 3;
+
   MaskFilter _nextBlur() {
     if (_blurIndex == _blurs.length - 1) {
       _blurIndex = 0;
@@ -53,12 +54,13 @@ class _StartScreenState extends State<StartScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     _nextBlur();
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body:  Column(
-          children: <Widget>[
-            Container(padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: <Widget>[
+          Stack(children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               //height: height*0.3,width:width,
               color: Color(0xffFFBD95),
               child: Column(
@@ -67,27 +69,16 @@ class _StartScreenState extends State<StartScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       //Text('WEE',style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40.0,color: Colors.black,)),),
-                ColorizeAnimatedTextKit(
-                    repeatForever: true,
-                    text: ["SCOOP",'SHORT '],
-                    speed: Duration(milliseconds: 1200),
-                    textStyle: TextStyle(fontSize: 44.0, fontFamily: 'CharterITC',fontWeight: FontWeight.bold),
-                    colors: [
-                      Colors.black,
-                      Colors.white,
-                      Colors.black,
-                      Colors.white,
-                    ],
-                    textAlign: TextAlign.start,
-                    alignment: AlignmentDirectional.topStart // or Alignment.topLeft
-                ),
-                  Image(image: AssetImage('assets/images/1.gif'),width: 80,height: 160,
-                    fit: BoxFit.fitHeight,),
-                  ColorizeAnimatedTextKit(
-                          repeatForever: true,
-                      speed: Duration(milliseconds: 1200),
-                            text: ["FEEDS","READ "],
-                            textStyle: TextStyle(fontSize: 44.0, fontFamily: 'CharterITC',fontWeight: FontWeight.bold),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25),
+                        child: ColorizeAnimatedTextKit(
+                            repeatForever: true,
+                            text: ["SCOOP", 'SHORT'],
+                            speed: Duration(milliseconds: 1200),
+                            textStyle: TextStyle(
+                                fontSize: 44.0,
+                                fontFamily: 'CharterITC',
+                                fontWeight: FontWeight.bold),
                             colors: [
                               Colors.black,
                               Colors.white,
@@ -95,8 +86,37 @@ class _StartScreenState extends State<StartScreen> {
                               Colors.white,
                             ],
                             textAlign: TextAlign.start,
-                            alignment: AlignmentDirectional.topStart // or Alignment.topLeft
-                        ),
+                            alignment: AlignmentDirectional
+                                .topStart // or Alignment.topLeft
+                            ),
+                      ),
+                      Image(
+                        image: AssetImage('assets/images/1.gif'),
+                        width: 80,
+                        height: 160,
+                        fit: BoxFit.fitHeight,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25),
+                        child: ColorizeAnimatedTextKit(
+                            repeatForever: true,
+                            speed: Duration(milliseconds: 1200),
+                            text: ["FEEDS", "READS"],
+                            textStyle: TextStyle(
+                                fontSize: 44.0,
+                                fontFamily: 'CharterITC',
+                                fontWeight: FontWeight.bold),
+                            colors: [
+                              Colors.black,
+                              Colors.white,
+                              Colors.black,
+                              Colors.white,
+                            ],
+                            textAlign: TextAlign.start,
+                            alignment: AlignmentDirectional
+                                .topStart // or Alignment.topLeft
+                            ),
+                      ),
                     ],
                   ),
                   _buildCard(
@@ -115,50 +135,97 @@ class _StartScreenState extends State<StartScreen> {
                 ],
               ),
             ),
+            Positioned(
+                top: 20,
+                left: 0.0,
 
-
-            Container(padding: EdgeInsets.all(15),alignment: Alignment.centerLeft,
-            color: Colors.white,
-            child: Text("Choose Category",style: TextStyle(fontSize: 25.0,color: Colors.black,fontFamily: 'KievitOT'),
-              )),
-            Expanded(
-              child: StaggeredGridView.count(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 15.0,
-                      mainAxisSpacing: 15.0,
-                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                      children: <Widget>[
-
-                        myitems('Top Stories','assets/images/undraw_newspaper_k72w.png',Information(topic:"top_stories")),
-                        myitems('Sports','assets/images/undraw_track_and_field_33qn.png' ,Information(topic:"sports")),
-                        myitems('Technology','assets/images/undraw_visionary_technology_33jy.png',Information(topic:"tech")),
-                        myitems('Gaming','assets/images/undraw_gaming_6oy3.png',Information(topic: "gaming",)),
-                        myitems('Fashion','assets/images/fashion_pic.png', Information(topic: "gaming",)),
-                        myitems('Automobile', 'assets/images/undraw_city_driver_jh2h.png',Information(topic: "gaming",)),
-                        myitems('International','assets/images/undraw_around_the_world_v9nu.png', Information(topic: "gaming",)),
-                        myitems('Lifestyle','assets/images/undraw_healthy_habit_bh5w.png', Information(topic: "gaming",)),
-                      ],
-                      staggeredTiles: [
-                        StaggeredTile.extent(1, 160),
-                        StaggeredTile.extent(1, 160),
-                        StaggeredTile.extent(1, 160),
-                        StaggeredTile.extent(1, 160),
-                        StaggeredTile.extent(1, 160),
-                        StaggeredTile.extent(1, 160),
-                        StaggeredTile.extent(1, 160),
-                        StaggeredTile.extent(1, 160),
-                      ],
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(Icons.settings,
+                      color:  Colors.black,
+                      size: 27.0),
+                )
             ),
-          ],
-        ),
-        ),
-        
-      );
+          ]),
+          Container(
+              padding: EdgeInsets.all(15),
+              alignment: Alignment.centerLeft,
+              color: Colors.white,
+              child: Text(
+                "Choose Category",
+                style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontFamily: 'KievitOT'),
+              )),
+          Expanded(
+            child: StaggeredGridView.count(
+              crossAxisCount: 3,
+              crossAxisSpacing: 15.0,
+              mainAxisSpacing: 15.0,
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+              children: <Widget>[
+                myitems(
+                    'Top Stories',
+                    'assets/images/undraw_newspaper_k72w.png',
+                    Information(topic: "top_stories")),
+                myitems(
+                    'Sports',
+                    'assets/images/undraw_track_and_field_33qn.png',
+                    Information(topic: "sports")),
+                myitems(
+                    'Technology',
+                    'assets/images/undraw_visionary_technology_33jy.png',
+                    Information(topic: "tech")),
+                myitems(
+                    'Gaming',
+                    'assets/images/undraw_gaming_6oy3.png',
+                    Information(
+                      topic: "gaming",
+                    )),
+                myitems(
+                    'Fashion',
+                    'assets/images/fashion_pic.png',
+                    Information(
+                      topic: "gaming",
+                    )),
+                myitems(
+                    'Automobile',
+                    'assets/images/undraw_city_driver_jh2h.png',
+                    Information(
+                      topic: "gaming",
+                    )),
+                myitems(
+                    'International',
+                    'assets/images/undraw_around_the_world_v9nu.png',
+                    Information(
+                      topic: "gaming",
+                    )),
+                myitems(
+                    'Lifestyle',
+                    'assets/images/undraw_healthy_habit_bh5w.png',
+                    Information(
+                      topic: "gaming",
+                    )),
+              ],
+              staggeredTiles: [
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 160),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-
-  Material myitems(String heading,String pic,function) {
+  Material myitems(String heading, String pic, function) {
     return Material(
         color: Colors.white,
         elevation: 10.0,
@@ -166,7 +233,8 @@ class _StartScreenState extends State<StartScreen> {
         borderRadius: BorderRadius.circular(20.0),
         child: InkResponse(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>function));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => function));
           },
           radius: 10.0,
           containedInkWell: false,
@@ -177,13 +245,19 @@ class _StartScreenState extends State<StartScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ClipRRect(
-                    child: new Image(image: AssetImage(pic),
+                    child: new Image(
+                      image: AssetImage(pic),
                       fit: BoxFit.fill,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                    child: Text(heading,style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 15.0,color: Colors.black,))),
+                    child: Text(heading,
+                        style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                        ))),
                   )
                 ],
               ),
@@ -191,6 +265,4 @@ class _StartScreenState extends State<StartScreen> {
           ),
         ));
   }
-
 }
-
