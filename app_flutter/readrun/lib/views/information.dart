@@ -106,49 +106,84 @@ class _InformationState extends State<Information> {
       //margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
       color: Colors.white,
       child: Stack(children: <Widget>[
-        Column(
-          children: <Widget>[
-            Container(
-              height: height * 0.5,
-              width: width,
-              child: ClipPath(
-                clipper: ClippingClass(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.fill, image: NetworkImage(data.picUrl)),
+        GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+                context: context,
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))),
+                builder: (BuildContext context) {
+                  return Container(
+                    height: 100,
+                    padding: EdgeInsets.only(top: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                                 IconButton(
+                                      onPressed: () {print('Share');},
+                                      icon: Icon(
+                                        Icons.share,
+                                        color: Color(0xffFFBD95),size: 30,
+                                      ),
+                                    ),
+                            AutoSizeText('Share',
+                                style: TextStyle(
+                                    fontFamily: 'KievitOT',
+                                    fontWeight: FontWeight.w300))
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                });
+          },
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: height * 0.5,
+                width: width,
+                child: ClipPath(
+                  clipper: ClippingClass(),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.fill, image: NetworkImage(data.picUrl)),
+                    ),
                   ),
                 ),
               ),
-            ),
-            new Padding(
-              padding: new EdgeInsets.fromLTRB(12.0, 18.0, 12.0, 10.0),
-              child: new Text(
-                data.heading,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 23,
-                    fontWeight: FontWeight.w700,
-                    decoration: TextDecoration.none,
-                    fontFamily: 'CharterITC'),
-              ),
-            ),
-            new Padding(
-                padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
-                child: new AutoSizeText(
-                  data.summary,
-                  textAlign: TextAlign.justify,
-                  maxLines: 9,
+              new Padding(
+                padding: new EdgeInsets.fromLTRB(12.0, 18.0, 12.0, 10.0),
+                child: new Text(
+                  data.heading,
+                  textAlign: TextAlign.left,
                   style: TextStyle(
-                      fontSize: 17.0,
                       color: Colors.black,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w700,
                       decoration: TextDecoration.none,
-                      fontFamily: 'KievitOT',
-                      fontWeight: FontWeight.w300),
-                ))
-          ],
+                      fontFamily: 'CharterITC'),
+                ),
+              ),
+              new Padding(
+                  padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
+                  child: new AutoSizeText(
+                    data.summary,
+                    textAlign: TextAlign.justify,
+                    maxLines: 9,
+                    style: TextStyle(
+                        fontSize: 17.0,
+                        color: Colors.black54,
+                        decoration: TextDecoration.none,
+                        fontFamily: 'KievitOT',
+                        fontWeight: FontWeight.w300),
+                  ))
+            ],
+          ),
         ),
         Positioned(
             top: 25,
