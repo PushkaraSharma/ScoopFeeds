@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:readrun/starting_screen.dart';
+import 'package:readrun/views/starting_screen.dart';
 import 'package:readrun/Splash_screen.dart';
 import 'dart:async';
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
-import 'package:readrun/News.dart';
+import 'package:readrun/model/News.dart';
 
 class MainFetchData extends StatefulWidget {
   @override

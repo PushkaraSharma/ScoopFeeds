@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:readrun/information.dart';
+import 'package:readrun/views/information.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StartScreen extends StatefulWidget {
@@ -233,9 +233,11 @@ class _StartScreenState extends State<StartScreen> {
         borderRadius: BorderRadius.circular(20.0),
         child: InkResponse(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => function));
-          },
+
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (BuildContext context) => function),
+              (Route<dynamic> route) => route is StartScreen);
+      },
           radius: 10.0,
           containedInkWell: false,
           child: Center(
