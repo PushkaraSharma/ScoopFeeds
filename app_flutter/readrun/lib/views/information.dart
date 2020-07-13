@@ -67,7 +67,6 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     print(list.isEmpty);
-
     return list.isEmpty
         ? FetchingNews()
         : PageView(reverse: true, pageSnapping: true, children: <Widget>[
@@ -89,6 +88,7 @@ class _InformationState extends State<Information> {
                 }),
             StartScreen()
           ]);
+
   }
 
   // Builder Functions
@@ -130,6 +130,27 @@ class _InformationState extends State<Information> {
                                       ),
                                     ),
                             AutoSizeText('Share',
+                                style: TextStyle(
+                                    fontFamily: 'KievitOT',
+                                    fontWeight: FontWeight.w300))
+                          ],
+                        ),
+                        SizedBox(width: 50,),
+                        Column(
+                          children: <Widget>[
+                            IconButton(
+                              onPressed: () {
+                                print('Refresh');
+                                Navigator.pop(context);
+                                onRefresh(1);
+
+                              },
+                              icon: Icon(
+                                Icons.refresh,
+                                color: Color(0xffFFBD95),size: 30,
+                              ),
+                            ),
+                            AutoSizeText('Refresh',
                                 style: TextStyle(
                                     fontFamily: 'KievitOT',
                                     fontWeight: FontWeight.w300))
@@ -225,7 +246,9 @@ class _InformationState extends State<Information> {
               child: RaisedButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
-                onPressed: () {},
+                onPressed: () {
+                  onRefresh(2);
+                },
                 child: Row(
                   children: <Widget>[
                     Icon(Icons.refresh),
@@ -248,6 +271,11 @@ class _InformationState extends State<Information> {
         ),
       ),
     );
+  }
+
+  void onRefresh(int sec) {
+    ctrl.animateToPage(0,duration: Duration(seconds:sec),curve: Curves.easeIn);
+    _fetchData();
   }
 }
 
