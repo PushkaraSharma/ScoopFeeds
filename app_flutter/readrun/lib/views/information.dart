@@ -3,10 +3,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
+import 'package:readrun/Widgets/waveclip.dart';
 import 'package:readrun/model/News.dart';
 import 'package:readrun/Widgets/Fetching_news_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:readrun/views/server_down.dart';
 import 'package:readrun/views/starting_screen.dart';
+
+import 'no_internet.dart';
 
 class Information extends StatefulWidget {
   final String topic;
@@ -67,6 +71,16 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     print(list.isEmpty);
+    Future.delayed(const Duration(seconds: 10), () {
+      if(mounted){
+      setState(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Server_Down()),
+        );
+      });}
+    });
     return list.isEmpty
         ? FetchingNews()
         : PageView(reverse: true, pageSnapping: true, children: <Widget>[
@@ -167,7 +181,7 @@ class _InformationState extends State<Information> {
                 height: height * 0.5,
                 width: width,
                 child: ClipPath(
-                  clipper: ClippingClass(),
+                  clipper: WaveClipper(),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -206,16 +220,6 @@ class _InformationState extends State<Information> {
             ],
           ),
         ),
-        Positioned(
-            top: 25,
-            left: 2.0,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(width: 18.0, color: Colors.white),
-              ),
-              child: Icon(Icons.refresh, color: Colors.black, size: 28.0),
-            )),
       ]),
     );
   }

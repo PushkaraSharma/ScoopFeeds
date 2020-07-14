@@ -359,14 +359,15 @@ class CustomDrawer extends StatelessWidget {
 
     return Container(
       //color: Color(0xffFFDDC8),
-      color:Colors.white,
+      color: Colors.white,
       width: mediaQuery.size.width * 0.60,
       height: mediaQuery.size.height,
-      child: Column(
-        children: <Widget>[
+      child: Stack(children: <Widget>[
+        Column(
+          children: <Widget>[
             Container(
               color: Color(0xffeee7eb),
-              height: mediaQuery.size.height*0.22,
+              height: mediaQuery.size.height * 0.22,
               width: mediaQuery.size.width * 0.60,
               child: Image(
                 image: AssetImage('assets/images/4.gif'),
@@ -377,65 +378,81 @@ class CustomDrawer extends StatelessWidget {
               clipper: WaveClipper(),
               child: Container(
                 height: 100,
+                width: mediaQuery.size.width * 0.60,
                 color: Color(0xffeee7eb),
+                child: AutoSizeText(
+                  'Read all new feeds in short',
+                  style: TextStyle(
+                      fontFamily: 'KievitOT',
+                      fontSize: 16,
+                      color: Colors.black54),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-
-          ListTile(
-            onTap: () {
-              debugPrint("Tapped Profile");
-            },
-            leading: Icon(Icons.person),
-            title: Text(
-              "Your Profile",
+            ListTile(
+              onTap: () {
+                debugPrint("Tapped Profile");
+              },
+              leading: Icon(Icons.person),
+              title: Text(
+                "Your Profile",
+              ),
             ),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-          ),
-          ListTile(
-            onTap: () {
-              debugPrint("Tapped settings");
-            },
-            leading: Icon(Icons.settings),
-            title: Text("Settings"),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-          ),
-          ListTile(
-            onTap: () {
-              debugPrint("Tapped Payments");
-            },
-            leading: Icon(Icons.payment),
-            title: Text("Payments"),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-          ),
-          ListTile(
-            onTap: () {
-              debugPrint("Tapped Notifications");
-            },
-            leading: Icon(Icons.notifications),
-            title: Text("Notifications"),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-          ),
-          ListTile(
-            onTap: () {
-              debugPrint("Tapped Log Out");
-            },
-            leading: Icon(Icons.exit_to_app),
-            title: Text("Log Out"),
-          ),
-        ],
-      ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+            ),
+            ListTile(
+              onTap: () {
+                debugPrint("Tapped settings");
+              },
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+            ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+            ),
+            ListTile(
+              onTap: () {
+                debugPrint("Tapped Payments");
+              },
+              leading: Icon(Icons.payment),
+              title: Text("Payments"),
+            ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+            ),
+            ListTile(
+              onTap: () {
+                debugPrint("Tapped Notifications");
+              },
+              leading: Icon(Icons.notifications),
+              title: Text("Notifications"),
+            ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+            ),
+            ListTile(
+              onTap: () {
+                debugPrint("Tapped Log Out");
+              },
+              leading: Icon(Icons.exit_to_app),
+              title: Text("Log Out"),
+            ),
+          ],
+        ),
+        Positioned(
+            bottom: mediaQuery.size.height * 0.745,
+            child: Container(
+              color: Color(0xffeee7eb),
+              width: mediaQuery.size.width * 0.60,
+              height: 5,
+            )),
+      ]),
     );
   }
 }
