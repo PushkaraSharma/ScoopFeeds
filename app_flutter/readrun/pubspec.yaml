@@ -30,6 +30,8 @@ dependencies:
   wave: ^0.0.8
   auto_size_text: ^2.1.0
   animated_text_kit: ^2.1.0
+  foldable_sidebar: ^1.0.0
+  swipedetector: ^1.2.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -65,6 +67,8 @@ flutter:
    - assets/images/1.gif
    - assets/images/dribble-guy-cloud-800x600.gif
    - assets/images/no_net.gif
+   - assets/images/4.gif
+   - assets/images/3.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
