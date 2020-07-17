@@ -11,6 +11,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 //color  - #FF9D63
     return MaterialApp(
+      theme: ThemeData(primaryColor: Color(0xffeee7eb)
+      ),
         home: Scaffold(body: SplashScreen())
     );
   }

@@ -71,16 +71,6 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     print(list.isEmpty);
-    Future.delayed(const Duration(seconds: 10), () {
-      if(mounted){
-      setState(() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Server_Down()),
-        );
-      });}
-    });
     return list.isEmpty
         ? FetchingNews()
         : PageView(reverse: true, pageSnapping: true, children: <Widget>[
@@ -181,7 +171,7 @@ class _InformationState extends State<Information> {
                 height: height * 0.5,
                 width: width,
                 child: ClipPath(
-                  clipper: WaveClipper(),
+                  clipper: ClippingClass(),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(

@@ -30,8 +30,8 @@ dependencies:
   wave: ^0.0.8
   auto_size_text: ^2.1.0
   animated_text_kit: ^2.1.0
-  foldable_sidebar: ^1.0.0
-  swipedetector: ^1.2.0
+  flutter_switch: ^0.1.1
+  provider: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
