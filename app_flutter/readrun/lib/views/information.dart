@@ -3,12 +3,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
+import 'package:readrun/constants.dart';
 import 'package:readrun/model/News.dart';
 import 'package:readrun/Widgets/Fetching_news_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:readrun/views/server_down.dart';
 import 'package:readrun/views/starting_screen.dart';
 
+import '../HomeScreen.dart';
 import 'no_internet.dart';
 
 class Information extends StatefulWidget {
@@ -89,7 +90,7 @@ class _InformationState extends State<Information> {
                     return _buildStoryPage(list[currentIdx], active);
                   }
                 }),
-            StartScreen()
+            HomeScreen()
           ]);
 
   }
@@ -129,7 +130,7 @@ class _InformationState extends State<Information> {
                                       onPressed: () {print('Share');},
                                       icon: Icon(
                                         Icons.share,
-                                        color: Color(0xffFFBD95),size: 30,
+                                        color: kSecondaryColor,size: 30,
                                       ),
                                     ),
                             AutoSizeText('Share',
@@ -150,7 +151,7 @@ class _InformationState extends State<Information> {
                               },
                               icon: Icon(
                                 Icons.refresh,
-                                color: Color(0xffFFBD95),size: 30,
+                                color: kPrimaryColor,size: 30,
                               ),
                             ),
                             AutoSizeText('Refresh',

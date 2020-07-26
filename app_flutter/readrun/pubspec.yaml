@@ -30,9 +30,8 @@ dependencies:
   wave: ^0.0.8
   auto_size_text: ^2.1.0
   animated_text_kit: ^2.1.0
-  flutter_switch: ^0.1.1
   flutter_svg: ^0.17.4
-  cached_network_image: ^2.2.0+1
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
