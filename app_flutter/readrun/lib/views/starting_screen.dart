@@ -340,21 +340,21 @@ Widget _Drawer(context) {
             onTap: () {
               debugPrint("Tapped Profile");
             },
-            leading: Icon(Icons.notifications_active),
+            leading: Icon(Icons.notifications_active,color: Color(0xffFFBD95),),
             title: Text(
               "Notifications",
             ),
             trailing: FlutterSwitch(
-              activeColor: Colors.green,
-              inactiveColor: Colors.red,
+              activeColor: Color(0xffeee7eb),
+             // inactiveColor: Colors.red,
               toggleColor: Color(0xffFFBD95),
-              width: 75.0,
+              width: 70.0,
               height: 30.0,
               valueFontSize: 15.0,
-              toggleSize: 30.0,
+              toggleSize: 35.0,
               value: status1,
               borderRadius: 20.0,
-              padding: 2.0,
+              padding: 0.0,
               showOnOff: true,
 //              onToggle: (val) {
 //                setState(() {

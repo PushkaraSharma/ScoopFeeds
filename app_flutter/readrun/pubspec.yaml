@@ -31,7 +31,7 @@ dependencies:
   auto_size_text: ^2.1.0
   animated_text_kit: ^2.1.0
   flutter_switch: ^0.1.1
-  provider: ^3.1.0
+  flutter_svg: ^0.17.4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -55,21 +55,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/undraw_gaming_6oy3.png
-   - assets/images/undraw_newspaper_k72w.png
-   - assets/images/undraw_visionary_technology_33jy.png
-   - assets/images/undraw_track_and_field_33qn.png
-   - assets/images/undraw_around_the_world_v9nu.png
-   - assets/images/undraw_city_driver_jh2h.png
-   - assets/images/undraw_healthy_habit_bh5w.png
-   - assets/images/undraw_server_down_s4lk.png
-   - assets/images/2.gif
-   - assets/images/fashion_pic.png
-   - assets/images/1.gif
-   - assets/images/dribble-guy-cloud-800x600.gif
-   - assets/images/no_net.gif
-   - assets/images/4.gif
-   - assets/images/3.gif
+   - assets/images/
+   - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
