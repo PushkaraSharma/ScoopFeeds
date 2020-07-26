@@ -151,7 +151,7 @@ class _InformationState extends State<Information> {
                               },
                               icon: Icon(
                                 Icons.refresh,
-                                color: kPrimaryColor,size: 30,
+                                color: kSecondaryColor,size: 30,
                               ),
                             ),
                             AutoSizeText('Refresh',
@@ -229,7 +229,7 @@ class _InformationState extends State<Information> {
               "You have read all Stories",
               style: TextStyle(
                   fontSize: 20.0,
-                  color: Colors.black,
+                  color: kTextColor,
                   fontFamily: 'KievitOT',
                   decoration: TextDecoration.none,
                   fontWeight: FontWeight.w400),
@@ -257,7 +257,7 @@ class _InformationState extends State<Information> {
                     )
                   ],
                 ),
-                color: Colors.white,
+                color: kSecondaryColor,
                 elevation: 5,
               ),
             )
