@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -6,8 +9,8 @@ import 'package:http/http.dart' as http;
 import 'package:readrun/constants.dart';
 import 'package:readrun/model/News.dart';
 import 'package:readrun/Widgets/Fetching_news_widget.dart';
-import 'package:readrun/views/server_down.dart';
-import 'package:readrun/views/starting_screen.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../HomeScreen.dart';
 import 'no_internet.dart';
@@ -26,6 +29,8 @@ class _InformationState extends State<Information> {
 
   _InformationState({this.topic});
 
+  ScreenshotController screenshotController = ScreenshotController();
+  File _imageFile;
   final PageController ctrl = PageController();
   int currentPage = 1;
 
@@ -38,7 +43,6 @@ class _InformationState extends State<Information> {
     });
     final response =
         await http.get("http://35.209.249.233:5000/" + topic + "/");
-    print(response);
     if (response.statusCode == 200) {
       list = (json.decode(response.body) as List)
           .map((data) => new News.fromJson(data))
@@ -54,7 +58,9 @@ class _InformationState extends State<Information> {
 
   @override
   void initState() {
+
     _fetchData();
+    super.initState();
     // Set state when page changes
     ctrl.addListener(() {
       int next = ctrl.page.round();
@@ -73,25 +79,28 @@ class _InformationState extends State<Information> {
     print(list.isEmpty);
     return list.isEmpty
         ? FetchingNews()
-        : PageView(reverse: true, pageSnapping: true, children: <Widget>[
-            PageView.builder(
-                controller: ctrl,
-                physics: BouncingScrollPhysics(),
-                itemCount: list.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, int currentIdx) {
-                  if (currentIdx == list.length - 1) {
-                    print("all over");
-                    return _buildEndPage();
-                    ;
-                  } else if (list.length >= currentIdx) {
-                    // Active page
-                    bool active = currentIdx == currentPage;
-                    return _buildStoryPage(list[currentIdx], active);
-                  }
-                }),
-            HomeScreen()
-          ]);
+        : Screenshot(
+      controller: screenshotController,
+          child: PageView(reverse: true, pageSnapping: true, children: <Widget>[
+              PageView.builder(
+                  controller: ctrl,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: list.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, int currentIdx) {
+                    if (currentIdx == list.length - 1) {
+                      print("all over");
+                      return _buildEndPage();
+                      ;
+                    } else if (list.length >= currentIdx) {
+                      // Active page
+                      bool active = currentIdx == currentPage;
+                      return _buildStoryPage(list[currentIdx], active);
+                    }
+                  }),
+              HomeScreen()
+            ]),
+        );
 
   }
 
@@ -127,7 +136,10 @@ class _InformationState extends State<Information> {
                         Column(
                           children: <Widget>[
                                  IconButton(
-                                      onPressed: () {print('Share');},
+                                      onPressed: () {
+                                        print('Share');
+                                        _takeScreenshotandShare();
+                                        },
                                       icon: Icon(
                                         Icons.share,
                                         color: kSecondaryColor,size: 30,
@@ -270,6 +282,27 @@ class _InformationState extends State<Information> {
   void onRefresh(int sec) {
     ctrl.animateToPage(0,duration: Duration(seconds:sec),curve: Curves.easeIn);
     _fetchData();
+  }
+
+  _takeScreenshotandShare() async {
+    _imageFile = null;
+    print(_imageFile);
+    screenshotController.capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0).then((File image) async {
+      setState(() {
+        _imageFile = image;
+      });
+
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      print(directory);
+      Uint8List pngBytes = _imageFile.readAsBytesSync();
+      //File imgFile = new File('$directory/screenshot.png');
+      //imgFile.writeAsBytes(pngBytes);
+      //print("File Saved to Gallery");
+      await Share.file('Scoop Feeds Shared News', 'screenshot.png', pngBytes, 'image/png',text: 'Read AI powered crisp and short summaries of latest news on Scoop Feeds.'
+          ' Download Now!!');
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 }
 
