@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:readrun/model/News.dart';
@@ -99,7 +100,8 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
-                            image: list.isEmpty?ExactAssetImage('assets/images/blurred-background-1.jpg'):NetworkImage(list[0].picUrl),
+                            image: list.isEmpty?ExactAssetImage('assets/images/blurred-background-1.jpg'):CachedNetworkImageProvider(list[0].picUrl),
+                            //NetworkImage(list[0].picUrl),
                             fit: BoxFit.cover)
                     ),
 
