@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:readrun/constants.dart';
 
 
-import '../HomeScreen.dart';
+import 'HomeScreen.dart';
 
 class Server_Down extends StatefulWidget {
 

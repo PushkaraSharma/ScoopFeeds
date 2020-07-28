@@ -3,7 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:readrun/constants.dart';
 import 'package:readrun/views/information.dart';
-import '../HomeScreen.dart';
+import 'HomeScreen.dart';
 
 class No_internet extends StatefulWidget {
   final String topic;

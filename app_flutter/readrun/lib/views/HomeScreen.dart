@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:readrun/components/body.dart';
+import 'package:readrun/views/components/body.dart';
 import 'package:readrun/constants.dart';
-import 'Widgets/waveclip.dart';
+import '../Widgets/waveclip.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-Widget _Drawer(context) {
+Widget _Drawer(BuildContext context) {
   bool status1 = false;
   final width = MediaQuery.of(context).size.width;
   final height = MediaQuery.of(context).size.height;

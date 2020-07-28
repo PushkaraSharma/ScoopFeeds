@@ -1,13 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:readrun/constants.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';
-
-import '../HomeScreen.dart';
+import 'package:readrun/views/HomeScreen.dart';
 import 'headerWithLatestNews.dart';
 import 'title_with_moreBtn.dart';
 

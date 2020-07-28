@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:readrun/model/News.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';
-import '../HomeScreen.dart';
-import '../constants.dart';
+import 'package:readrun/views/HomeScreen.dart';
+import 'package:readrun/constants.dart';
 import 'package:http/http.dart' as http;
 
 class HeaderWithLatestNews extends StatefulWidget {

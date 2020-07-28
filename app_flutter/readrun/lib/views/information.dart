@@ -12,7 +12,7 @@ import 'package:readrun/Widgets/Fetching_news_widget.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../HomeScreen.dart';
+import 'HomeScreen.dart';
 import 'no_internet.dart';
 
 class Information extends StatefulWidget {
