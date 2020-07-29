@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     await Navigator.push(
       context,
-      new MaterialPageRoute(builder: (context) => new Information(topic: 'top_stories')),
+      new MaterialPageRoute(builder: (context) =>  Information(topic: 'top_stories')),
     );
   }
   void _showNotification() async {
