@@ -4,10 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:readrun/views/components/body.dart';
 import 'package:readrun/constants.dart';
-import 'package:readrun/views/information.dart';
 import '../Widgets/waveclip.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import '../theme.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,64 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-//  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-//  @override
-//  void initState(){
-//    super.initState();
-//    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-//    var initializationSettingsAndroid = new AndroidInitializationSettings('app_icon');
-//    var initializationSettingsIOS = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-//    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
-//    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
-//    _showNotification();
-//  }
-//  Future onDidReceiveLocalNotification(
-//      int id, String title, String body, String payload) async {
-//    // display a dialog with the notification details, tap ok to go to another page
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) => new AlertDialog(
-//        title: new Text("Add Today's Earning"),
-//        content: new Text('Adding daliy earning will help to manage easy.'),
-//        actions: [
-//          FlatButton(
-//            child: new Text('Ok'),
-//            onPressed: ()  {
-//              Navigator.of(context).pop();
-//            },
-//          )
-//        ],
-//      ),
-//    );
-//  }
-//  Future onSelectNotification(String payload) async {
-//    if (payload != null) {
-//      debugPrint('notification payload: ' + payload);
-//    }
-//    await Navigator.push(
-//      context,
-//      new MaterialPageRoute(builder: (context) =>  Information(topic: 'top_stories')),
-//    );
-//  }
-//  void _showNotification() async {
-//    var androidPlatformChannelSpecifics =
-//    new AndroidNotificationDetails('repeatDailyAtTime channel id',
-//        'repeatDailyAtTime channel name', 'repeatDailyAtTime description',
-//        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-//    var iOSPlatformChannelSpecifics =
-//    new IOSNotificationDetails();
-//    var platformChannelSpecifics = new NotificationDetails(
-//        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-//    await flutterLocalNotificationsPlugin.periodicallyShow(
-//        0,
-//        "Add Today's Earning",
-//        'Adding daliy earning will help to manage easy.',
-//        RepeatInterval.EveryMinute,
-//        platformChannelSpecifics);
-//  }
-
-//  bool noti_on = false;
-//  bool dark_mode = false;
   @override
   Widget build(BuildContext context) {
 
@@ -137,17 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
 
-//                    trailing: Switch(
-//                      value: noti_on,
-//                      onChanged: (bool value) {
-//                        setState(() {
-//                          noti_on = value;
-//                          print(noti_on);
-//                        });
-//                      },
-////                    activeTrackColor: Colors.lightGreenAccent,
-////                    activeColor: Colors.green,
-//                    ),
                   ),
                   Divider(
                     height: 1,

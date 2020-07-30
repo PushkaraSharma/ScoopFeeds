@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:readrun/model/News.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';
 import 'package:readrun/views/HomeScreen.dart';
 import 'package:readrun/constants.dart';
 import 'package:http/http.dart' as http;
+
 
 class HeaderWithLatestNews extends StatefulWidget {
   final Size size;
@@ -25,7 +27,12 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
 
   List<News> list = List();
   var isLoading = false;
+  var attachmentPicturePath = '';
+
   _fetchData() async {
+    var directory = await getApplicationDocumentsDirectory();
+    attachmentPicturePath = '${directory.path}/attachment_img.jpg';
+
     setState(() {
       isLoading = true;
     });
@@ -35,6 +42,8 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
       list = (json.decode(response.body) as List)
           .map((data) => new News.fromJson(data))
           .toList();
+      String pic_url = list[0].picUrl;
+      attachmentPicturePath = await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
       setState(() {
         isLoading = false;
       });
@@ -49,7 +58,7 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
 
   @override
   Widget build(BuildContext context) {
-
+   // attachmentPicturePath =  _providePath();
     return Container(
       margin: EdgeInsets.only(bottom: kDefaultPadding * 0.5),
       // It will cover 20% of our total height
@@ -100,7 +109,8 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
-                            image: list.isEmpty?ExactAssetImage('assets/images/blurred-background-1.jpg'):CachedNetworkImageProvider(list[0].picUrl),
+                          image: attachmentPicturePath!=''?ExactAssetImage(attachmentPicturePath):ExactAssetImage('assets/images/blurred-background-1.jpg'),
+//                            image: list.isEmpty?ExactAssetImage('assets/images/blurred-background-1.jpg'):ExactAssetImage(attachmentPicturePath),
                             //NetworkImage(list[0].picUrl),
                             fit: BoxFit.cover)
                     ),
@@ -200,5 +210,13 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
         ],
       ),
     );
+  }
+  _downloadAndSaveFile(String url, String fileName) async {
+    var directory = await getApplicationDocumentsDirectory();
+    var filePath = '${directory.path}/$fileName';
+    var response = await http.get(url);
+    var file = File(filePath);
+    await file.writeAsBytes(response.bodyBytes);
+    return filePath;
   }
 }
