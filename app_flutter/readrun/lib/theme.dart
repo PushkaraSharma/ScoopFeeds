@@ -22,10 +22,12 @@ class ThemeNotifier extends ChangeNotifier {
   SharedPreferences _prefs;
   bool _darkTheme;
   bool _notification;
+  String _picUrl;
 
 
   bool get darkTheme => _darkTheme;
   bool get notification => _notification;
+  String get picUrl => _picUrl;
 
   ThemeNotifier() {
     _darkTheme = true;
@@ -57,12 +59,17 @@ class ThemeNotifier extends ChangeNotifier {
     await _initPrefs();
     _darkTheme = _prefs.getBool('theme') ?? true;
     _notification = _prefs.getBool('notification') ?? true;
+    _picUrl = _prefs.getString('picUrl');
     notifyListeners();
   }
 
-  _saveToPrefs(String key,bool value)async {
+  _saveToPrefs(String key,value)async {
     await _initPrefs();
-    _prefs.setBool(key, value);
+    if(value==bool)
+    {_prefs.setBool(key, value);}
+    else{
+      _prefs.setString(key, value);
+    }
   }
 
 }

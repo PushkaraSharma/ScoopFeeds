@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:readrun/model/News.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';
@@ -27,13 +28,10 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
 
   List<News> list = List();
   var isLoading = false;
-  var attachmentPicturePath = '';
-
+  String firstPicUrl='NotFound';
   _fetchData() async {
-    var directory = await getApplicationDocumentsDirectory();
-    attachmentPicturePath = '${directory.path}/attachment_img.jpg';
-
-    setState(() {
+     firstPicUrl = await _read();
+      setState(() {
       isLoading = true;
     });
     final response = await http.get("http://35.209.249.233:5000/" + 'top_stories' + "/");
@@ -42,11 +40,11 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
       list = (json.decode(response.body) as List)
           .map((data) => new News.fromJson(data))
           .toList();
-      String pic_url = list[0].picUrl;
-      attachmentPicturePath = await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
+      _write(list[0].picUrl);
       setState(() {
         isLoading = false;
       });
+      firstPicUrl = await _read();
     } else {
       throw Exception('Failed to load News');
     }
@@ -58,7 +56,6 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
 
   @override
   Widget build(BuildContext context) {
-   // attachmentPicturePath =  _providePath();
     return Container(
       margin: EdgeInsets.only(bottom: kDefaultPadding * 0.5),
       // It will cover 20% of our total height
@@ -101,21 +98,27 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
             right: 0,
             child: Container(
               padding: EdgeInsets.all(20.0),
-              child: Column(
+              child: Stack(
                 children: <Widget>[
                   Container(
                     width: double.infinity,
                     height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          image: attachmentPicturePath!=''?ExactAssetImage(attachmentPicturePath):ExactAssetImage('assets/images/blurred-background-1.jpg'),
-//                            image: list.isEmpty?ExactAssetImage('assets/images/blurred-background-1.jpg'):ExactAssetImage(attachmentPicturePath),
-                            //NetworkImage(list[0].picUrl),
-                            fit: BoxFit.cover)
+                    child:ClipRRect(borderRadius: BorderRadius.circular(20.0),
+                      child: firstPicUrl=='Notfound'?Image.asset("assets/images/blurred-background-1.jpg",fit: BoxFit.fill,height: 200,)
+                          :CachedNetworkImage(
+                        height: 200,
+                        fit: BoxFit.fill,
+                          imageUrl: firstPicUrl,
+                          placeholder: (context, url) => Image.asset('assets/images/blurred-background-1.jpg',fit: BoxFit.fill,),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
                     ),
 
-                    child: Container(
+                     ),
+
+                    Container(
+                      width: double.infinity,
+                      height: 200,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
@@ -202,21 +205,36 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ]),
+    ))],
               ),
-            ),
-          ),
-        ],
-      ),
-    );
+            );
+//          ),
+//        ],
+//      ),
+//    );
   }
-  _downloadAndSaveFile(String url, String fileName) async {
-    var directory = await getApplicationDocumentsDirectory();
-    var filePath = '${directory.path}/$fileName';
-    var response = await http.get(url);
-    var file = File(filePath);
-    await file.writeAsBytes(response.bodyBytes);
-    return filePath;
+  _write(String text) async {
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final File file = File('${directory.path}/firstUrl.txt');
+    await file.writeAsString(text);
   }
+  Future<String> _read() async {
+    String text;
+    try {
+      final Directory directory = await getApplicationDocumentsDirectory();
+      var path = '${directory.path}/firstUrl.txt';
+      if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
+        final File file = File(path);
+        text = await file.readAsString();
+      }
+      else{
+        text = 'NotFound';
+      }
+    } catch (e) {
+      print("Couldn't read file");
+    }
+    return text;
+  }
+
 }

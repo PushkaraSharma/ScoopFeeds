@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'views/HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,9 +16,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
     startTime();
+
   }
 
   @override
@@ -22,9 +28,21 @@ class _SplashScreenState extends State<SplashScreen> {
     return
       initScreen(context);
   }
+//  _checkImageExist() async {
+//    print('Heyyyyy audaiuguaf');
+//    Directory directory = await getApplicationDocumentsDirectory();
+//    var dbPath ='${directory.path}/attachment_img.jpg';
+//    if (FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
+//      ByteData data = await rootBundle.load("assets/images/blurred-background-1.jpg");
+//      List<int> bytes = data.buffer.asUint8List(
+//          data.offsetInBytes, data.lengthInBytes);
+//      await File(dbPath).writeAsBytes(bytes);
+//      print('Its done');
+//    }
+//  }
 
   startTime() async {
-    var duration = new Duration(seconds: 1);
+    var duration = new Duration(seconds: 4);
     return new Timer(duration, route);
   }
 

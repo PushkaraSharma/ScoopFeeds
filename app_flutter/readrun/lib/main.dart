@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:readrun/Splash_screen.dart';
 import 'package:readrun/theme.dart';
 import 'package:provider/provider.dart';
-
-import 'dart:async';
-
-import 'constants.dart';
 import 'notification_plugin.dart';
 
 void main() => runApp(MyApp());
