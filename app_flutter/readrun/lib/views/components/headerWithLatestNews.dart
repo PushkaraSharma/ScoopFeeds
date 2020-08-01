@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:readrun/model/News.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';

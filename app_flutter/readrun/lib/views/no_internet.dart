@@ -24,10 +24,12 @@ class _No_internetState extends State<No_internet> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(backgroundColor: Colors.white,
+    return Scaffold(
+//      backgroundColor: Colors.white,
       body: Align(
         alignment: Alignment.center,
-        child: Container(color: Colors.white,
+        child: Container(
+//          color: Colors.white,
           child: Column(children: <Widget>[
             SizedBox(height: height*0.15,),
             Image(image: AssetImage('assets/images/no_net.gif'),
@@ -35,7 +37,10 @@ class _No_internetState extends State<No_internet> {
             SizedBox(height: 20,),
             AutoSizeText("No Internet Connection!",style: TextStyle(fontSize: 20,fontFamily: 'KievitOT'),),
             SizedBox(height: 15,),
-            AutoSizeText("Please check your internet connection and retry",style: TextStyle(fontSize: 15,color:Colors.black54,fontFamily: 'KievitOT'),),
+            AutoSizeText("Please check your internet connection and retry",
+//              style: TextStyle(fontSize: 15,color:Colors.black54,fontFamily: 'KievitOT'),
+            style: Theme.of(context).textTheme.bodyText1,
+            ),
             SizedBox(height: 20,),
             Container(
               width: 160,

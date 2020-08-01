@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:path_provider/path_provider.dart';
 import 'views/HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,18 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return
       initScreen(context);
   }
-//  _checkImageExist() async {
-//    print('Heyyyyy audaiuguaf');
-//    Directory directory = await getApplicationDocumentsDirectory();
-//    var dbPath ='${directory.path}/attachment_img.jpg';
-//    if (FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
-//      ByteData data = await rootBundle.load("assets/images/blurred-background-1.jpg");
-//      List<int> bytes = data.buffer.asUint8List(
-//          data.offsetInBytes, data.lengthInBytes);
-//      await File(dbPath).writeAsBytes(bytes);
-//      print('Its done');
-//    }
-//  }
+
 
   startTime() async {
     var duration = new Duration(seconds: 4);
@@ -56,14 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-//            Container(
-//              child: Image.asset("images/logo.png"),
-//            ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
-            Image.asset("assets/icons/logo_intro.png"),
+            Image.asset("assets/icons/logo_intro.png",),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             CircularProgressIndicator(
-              backgroundColor: Colors.white,
+//              backgroundColor: Colors.white,
               strokeWidth: 1,
             )
           ],

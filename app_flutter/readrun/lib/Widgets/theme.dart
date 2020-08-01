@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'constants.dart';
+import '../constants.dart';
 
 ThemeData light = ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
+          textTheme: TextTheme(headline2:TextStyle(color: Colors.black, fontSize: 23, fontWeight: FontWeight.w700, decoration: TextDecoration.none, fontFamily: 'CharterITC'),
+           bodyText1: TextStyle(fontSize: 17.0, color: Colors.black54, decoration: TextDecoration.none, fontFamily: 'KievitOT', fontWeight: FontWeight.w300),
+          ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
          brightness: Brightness.light,
 
@@ -13,8 +16,12 @@ ThemeData light = ThemeData(
 
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
-  primarySwatch: Colors.indigo,
-  accentColor: Colors.pink,
+  scaffoldBackgroundColor: dBackgroundColor,
+  primaryColor: dPrimaryColor,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  textTheme: TextTheme(headline2:TextStyle(color: Colors.white, fontSize: 23, fontWeight: FontWeight.w700, decoration: TextDecoration.none, fontFamily: 'CharterITC'),
+    bodyText1: TextStyle(fontSize: 17.0, color: dTextColor, decoration: TextDecoration.none, fontFamily: 'KievitOT', fontWeight: FontWeight.w300),
+  ),
 );
 
 class ThemeNotifier extends ChangeNotifier {

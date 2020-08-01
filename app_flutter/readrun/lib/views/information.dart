@@ -117,7 +117,7 @@ class _InformationState extends State<Information> {
       duration: Duration(milliseconds: 1000),
       curve: Curves.easeInCirc,
       //margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
-      color: Colors.white,
+//      color: Colors.white,
       child: Stack(children: <Widget>[
         GestureDetector(
           onTap: () {
@@ -198,12 +198,13 @@ class _InformationState extends State<Information> {
                 child: new Text(
                   data.heading,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w700,
-                      decoration: TextDecoration.none,
-                      fontFamily: 'CharterITC'),
+                  style:Theme.of(context).textTheme.headline2 ,
+//                  style: TextStyle(
+//                      color: Colors.black,
+//                      fontSize: 23,
+//                      fontWeight: FontWeight.w700,
+//                      decoration: TextDecoration.none,
+//                      fontFamily: 'CharterITC'),
                 ),
               ),
               new Padding(
@@ -212,12 +213,13 @@ class _InformationState extends State<Information> {
                     data.summary,
                     textAlign: TextAlign.justify,
                     maxLines: 9,
-                    style: TextStyle(
-                        fontSize: 17.0,
-                        color: Colors.black54,
-                        decoration: TextDecoration.none,
-                        fontFamily: 'KievitOT',
-                        fontWeight: FontWeight.w300),
+                    style: Theme.of(context).textTheme.bodyText1 ,
+//                    style: TextStyle(
+//                        fontSize: 17.0,
+//                        color: Colors.black54,
+//                        decoration: TextDecoration.none,
+//                        fontFamily: 'KievitOT',
+//                        fontWeight: FontWeight.w300),
                   ))
             ],
           ),
@@ -228,7 +230,7 @@ class _InformationState extends State<Information> {
 
   _buildEndPage() {
     return Container(
-      color: Colors.white,
+//      color: Colors.white,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -295,9 +297,6 @@ class _InformationState extends State<Information> {
       final directory = (await getApplicationDocumentsDirectory()).path;
       print(directory);
       Uint8List pngBytes = _imageFile.readAsBytesSync();
-      //File imgFile = new File('$directory/screenshot.png');
-      //imgFile.writeAsBytes(pngBytes);
-      //print("File Saved to Gallery");
       await Share.file('Scoop Feeds Shared News', 'screenshot.png', pngBytes, 'image/png',text: 'Read AI powered crisp and short summaries of latest news on Scoop Feeds.'
           ' Download Now!!');
     }).catchError((onError) {

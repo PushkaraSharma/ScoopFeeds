@@ -1,9 +1,6 @@
-import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:readrun/constants.dart';
-
-
 import 'HomeScreen.dart';
 
 class Server_Down extends StatefulWidget {
@@ -20,10 +17,12 @@ class _Server_DownState extends State<Server_Down> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(backgroundColor: Colors.white,
+    return Scaffold(
+//      backgroundColor: Colors.white,
       body: Align(
         alignment: Alignment.center,
-        child: Container(color: Colors.white,
+        child: Container(
+//          color: Colors.white,
           child: Column(children: <Widget>[
             SizedBox(height: height*0.15,),
             Image(image: AssetImage('assets/images/undraw_server_down_s4lk.png'),
@@ -31,7 +30,10 @@ class _Server_DownState extends State<Server_Down> {
             SizedBox(height: 20,),
             AutoSizeText("Server Down!",style: TextStyle(fontSize: 20,fontFamily: 'KievitOT'),),
             SizedBox(height: 15,),
-            AutoSizeText("Server is down for maintenance, Retry later",style: TextStyle(fontSize: 15,color:Colors.black54,fontFamily: 'KievitOT'),),
+            AutoSizeText("Server is down for maintenance, Retry later",
+//              style: TextStyle(fontSize: 15,color:Colors.black54,fontFamily: 'KievitOT'),
+            style: Theme.of(context).textTheme.bodyText1,
+            ),
             SizedBox(height: 20,),
             Container(
               width: 160,

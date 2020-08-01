@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:readrun/views/components/body.dart';
 import 'package:readrun/constants.dart';
 import '../Widgets/waveclip.dart';
-import '../theme.dart';
+import '../Widgets/theme.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

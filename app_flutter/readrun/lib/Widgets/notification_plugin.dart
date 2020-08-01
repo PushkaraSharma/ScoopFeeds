@@ -8,7 +8,7 @@ import 'dart:io' show File, InternetAddress, Platform, SocketException;
 import 'package:http/http.dart' as http;
 import 'package:rxdart/subjects.dart';
 
-import 'model/News.dart';
+import '../model/News.dart';
 
 class NotificationPlugin {
   //
