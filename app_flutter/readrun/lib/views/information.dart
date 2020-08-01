@@ -121,6 +121,7 @@ class _InformationState extends State<Information> {
       child: Stack(children: <Widget>[
         GestureDetector(
           onTap: () {
+            add_temp_images(context);
             showModalBottomSheet(
                 context: context,
                 elevation: 10,
@@ -199,12 +200,6 @@ class _InformationState extends State<Information> {
                   data.heading,
                   textAlign: TextAlign.left,
                   style:Theme.of(context).textTheme.headline2 ,
-//                  style: TextStyle(
-//                      color: Colors.black,
-//                      fontSize: 23,
-//                      fontWeight: FontWeight.w700,
-//                      decoration: TextDecoration.none,
-//                      fontFamily: 'CharterITC'),
                 ),
               ),
               new Padding(
@@ -214,17 +209,17 @@ class _InformationState extends State<Information> {
                     textAlign: TextAlign.justify,
                     maxLines: 9,
                     style: Theme.of(context).textTheme.bodyText1 ,
-//                    style: TextStyle(
-//                        fontSize: 17.0,
-//                        color: Colors.black54,
-//                        decoration: TextDecoration.none,
-//                        fontFamily: 'KievitOT',
-//                        fontWeight: FontWeight.w300),
                   ))
             ],
           ),
         ),
       ]),
+    );
+  }
+  add_temp_images(context)
+  {print("hellly");
+    return Positioned(bottom: 100,
+      child: Image.asset("assets/images/2.gif"),
     );
   }
 
