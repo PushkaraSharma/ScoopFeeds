@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:readrun/constants.dart';
 import 'package:readrun/views/information.dart';
@@ -64,13 +65,13 @@ class _BodyState extends State<Body> {
               ),
             ],
             staggeredTiles: [
-              StaggeredTile.extent(1, 160),
-              StaggeredTile.extent(1, 160),
-              StaggeredTile.extent(1, 160),
-              StaggeredTile.extent(1, 160),
-              StaggeredTile.extent(1, 160),
-              StaggeredTile.extent(1, 160),
-              StaggeredTile.extent(1, 160),
+              StaggeredTile.extent(1, 150),
+              StaggeredTile.extent(1, 150),
+              StaggeredTile.extent(1, 150),
+              StaggeredTile.extent(1, 150),
+              StaggeredTile.extent(1, 150),
+              StaggeredTile.extent(1, 150),
+              StaggeredTile.extent(1, 150),
             ],
           ),
         ),
@@ -81,64 +82,67 @@ class _BodyState extends State<Body> {
   Material myitems(String heading, String pic, String topic) {
     return Material(
 //        color: Colors.white,
-        elevation: 6.0,
+        elevation: 4.0,
         shadowColor: Colors.black,
         borderRadius: BorderRadius.circular(20.0),
-        child: InkResponse(
-          onTap: () {
-            try {
-              InternetAddress.lookup('google.com').then((result) {
-                if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-                  Navigator.pushAndRemoveUntil(
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0), border: Border.all(width: 1,color: Theme.of(context).primaryColor),),
+          child: InkResponse(
+            onTap: () {
+              try {
+                InternetAddress.lookup('google.com').then((result) {
+                  if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                Information(topic: topic)),
+                        (Route<dynamic> route) => route is HomeScreen);
+                  } else {
+                    print('No internet');
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              Information(topic: topic)),
-                      (Route<dynamic> route) => route is HomeScreen);
-                } else {
+                          builder: (context) => No_internet(topic: topic)),
+                    );
+                  }
+                }).catchError((error) {
                   print('No internet');
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => No_internet(topic: topic)),
                   );
-                }
-              }).catchError((error) {
-                print('No internet');
+                });
+              } on SocketException catch (_) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => No_internet(topic: topic)),
                 );
-              });
-            } on SocketException catch (_) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => No_internet(topic: topic)),
-              );
-            }
-          },
-          radius: 10.0,
-          containedInkWell: false,
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(1.0),
-              child: Column(
+              }
+            },
+            radius: 10.0,
+            containedInkWell: false,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
+                child:Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
                     child: new Image(
                       image: AssetImage(pic),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                    padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                     child: Text(heading, style: TextStyle(fontSize: 15.0,fontFamily: 'KievitOT')),
                   )
                 ],
-              ),
+              )),
             ),
           ),
         ));
