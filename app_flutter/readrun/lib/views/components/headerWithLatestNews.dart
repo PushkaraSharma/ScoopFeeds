@@ -103,9 +103,9 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                     width: double.infinity,
                     height: 200,
                     child:ClipRRect(borderRadius: BorderRadius.circular(20.0),
-                      child: firstPicUrl=='Notfound'?Image.asset("assets/images/blurred-background-1.jpg",fit: BoxFit.fill,height: 200,)
+                      child: firstPicUrl=='Notfound'?Image.asset("assets/images/blurred-background-1.jpg",fit: BoxFit.fill,height: 210,width: double.infinity,)
                           :CachedNetworkImage(
-                        height: 200,
+                        height: 210,width: double.infinity,
                         fit: BoxFit.fill,
                           imageUrl: firstPicUrl,
                           placeholder: (context, url) => Image.asset('assets/images/blurred-background-1.jpg',fit: BoxFit.fill,),

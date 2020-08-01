@@ -24,10 +24,12 @@ class _FetchingNewsState extends State<FetchingNews> {
           );
         });}
     });
-    return Scaffold(backgroundColor: Colors.white,
+    return Scaffold(
+//      backgroundColor: Colors.white,
       body: Align(
         alignment: Alignment.center,
-        child: Container(color: Colors.white,
+        child: Container(
+//          color: Colors.white,
             height: height*0.4,width: width*0.6,
               child: Column(children: <Widget>[
               Image(image: AssetImage('assets/images/dribble-guy-cloud-800x600.gif'),

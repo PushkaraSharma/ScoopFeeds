@@ -80,7 +80,7 @@ class _BodyState extends State<Body> {
 
   Material myitems(String heading, String pic, String topic) {
     return Material(
-        color: Colors.white,
+//        color: Colors.white,
         elevation: 6.0,
         shadowColor: Colors.black,
         borderRadius: BorderRadius.circular(20.0),
@@ -135,7 +135,7 @@ class _BodyState extends State<Body> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                    child: Text(heading, style: TextStyle(fontSize: 15.0, color: kTextColor,fontFamily: 'KievitOT')),
+                    child: Text(heading, style: TextStyle(fontSize: 15.0,fontFamily: 'KievitOT')),
                   )
                 ],
               ),

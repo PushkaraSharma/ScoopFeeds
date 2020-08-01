@@ -1,11 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:readrun/Splash_screen.dart';
 import 'package:readrun/Widgets/theme.dart';
 import 'package:provider/provider.dart';
 import 'Widgets/notification_plugin.dart';
+//import 'package:device_preview/device_preview.dart';
 
 void main() => runApp(MyApp());
 
+//void main() {
+//  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+//
+//  runApp(DevicePreview(
+//    builder: (context) => MyApp(),
+//  ));
+//}
 class MyApp extends StatefulWidget {
 
   @override
@@ -17,8 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    notificationPlugin
-        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationPlugin.setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationPlugin.setOnNotificationClick(onNotificationClick);
   }
 
@@ -31,7 +39,7 @@ class _MyAppState extends State<MyApp> {
           _checkNotificationOnOff() async {
             print('function');
             if (notifier.notification == true) {
-              await notificationPlugin.showNotificationWithAttachment();
+              await notificationPlugin.showNotificationWithAttachment(2.0);
             } else {
               await notificationPlugin.cancelNotification();
             }

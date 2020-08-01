@@ -117,7 +117,7 @@ class _InformationState extends State<Information> {
       duration: Duration(milliseconds: 1000),
       curve: Curves.easeInCirc,
       //margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
-//      color: Colors.white,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Stack(children: <Widget>[
         GestureDetector(
           onTap: () {

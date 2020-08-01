@@ -110,7 +110,7 @@ class NotificationPlugin {
 //    } on SocketException catch (_) {}
 //  }
 
-  Future<void> showNotificationWithAttachment() async {
+  Future<void> showNotificationWithAttachment(double range) async {
 
     List<News> list = List();
     isLoading = true;
@@ -135,10 +135,10 @@ class NotificationPlugin {
     );
     var bigPictureStyleInformation = BigPictureStyleInformation(
       FilePathAndroidBitmap(attachmentPicturePath),
-      contentTitle: '<b>$heading</b>',
-      htmlFormatContentTitle: true,
+//      contentTitle: '<b>$heading</b>',
+//      htmlFormatContentTitle: true,
       //summaryText: heading,
-      htmlFormatSummaryText: true,
+//      htmlFormatSummaryText: true,
     );
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL ID 2',
@@ -147,19 +147,20 @@ class NotificationPlugin {
       importance: Importance.High,
       priority: Priority.High,
       styleInformation: bigPictureStyleInformation,
+      ongoing: true,
+        icon: 'app_icon',
+        color: Colors.white,
     );
     var notificationDetails =
     NotificationDetails(androidChannelSpecifics, iOSPlatformSpecifics);
 
     await flutterLocalNotificationsPlugin.periodicallyShow(
         0,
-        'Scoop Feeds',
+        'Breaking News',
         heading,
-        RepeatInterval.EveryMinute,
+        RepeatInterval.Hourly,
         notificationDetails
     );
-
-
 
   }
 
