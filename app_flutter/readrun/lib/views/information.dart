@@ -11,7 +11,7 @@ import 'package:readrun/model/News.dart';
 import 'package:readrun/Widgets/Fetching_news_widget.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:screenshot/screenshot.dart';
-
+import '../secrets.dart';
 import 'HomeScreen.dart';
 import 'no_internet.dart';
 
@@ -36,13 +36,16 @@ class _InformationState extends State<Information> {
 
   List<News> list = List();
   var isLoading = false;
+  var show_temp_images = false;
 
   _fetchData() async {
+
+
     setState(() {
       isLoading = true;
     });
     final response =
-        await http.get("http://35.209.249.233:5000/" + topic + "/");
+        await http.get(api_key + topic + "/");
     if (response.statusCode == 200) {
       list = (json.decode(response.body) as List)
           .map((data) => new News.fromJson(data))
@@ -58,7 +61,6 @@ class _InformationState extends State<Information> {
 
   @override
   void initState() {
-
     _fetchData();
     super.initState();
     // Set state when page changes
@@ -74,14 +76,21 @@ class _InformationState extends State<Information> {
     });
   }
 
+  void _changed() {
+    setState(() {
+      show_temp_images = !show_temp_images;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print(list.isEmpty);
     return list.isEmpty
         ? FetchingNews()
         : Screenshot(
-      controller: screenshotController,
-          child: PageView(reverse: true, pageSnapping: true, children: <Widget>[
+            controller: screenshotController,
+            child:
+                PageView(reverse: true, pageSnapping: true, children: <Widget>[
               PageView.builder(
                   controller: ctrl,
                   physics: BouncingScrollPhysics(),
@@ -100,19 +109,19 @@ class _InformationState extends State<Information> {
                   }),
               HomeScreen()
             ]),
-        );
-
+          );
   }
 
   // Builder Functions
   _buildStoryPage(News data, bool active) {
     // Animated Properties
-    final double blur = active ? 30 : 0;
-    final double offset = active ? 20 : 0;
-    final double top = active ? 100 : 200;
+//    final double blur = active ? 30 : 0;
+//    final double offset = active ? 20 : 0;
+//    final double top = active ? 100 : 200;
+
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
+    print(height);
     return AnimatedContainer(
       duration: Duration(milliseconds: 1000),
       curve: Curves.easeInCirc,
@@ -121,12 +130,14 @@ class _InformationState extends State<Information> {
       child: Stack(children: <Widget>[
         GestureDetector(
           onTap: () {
-            add_temp_images(context);
-            showModalBottomSheet(
+            _changed();
+            showModalBottomSheet<void>(
                 context: context,
                 elevation: 10,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(25),
+                        topLeft: Radius.circular(25))),
                 builder: (BuildContext context) {
                   return Container(
                     height: 100,
@@ -136,23 +147,26 @@ class _InformationState extends State<Information> {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                                 IconButton(
-                                      onPressed: () {
-                                        print('Share');
-                                        _takeScreenshotandShare();
-                                        },
-                                      icon: Icon(
-                                        Icons.share,
-                                        color: kSecondaryColor,size: 30,
-                                      ),
-                                    ),
+                            IconButton(
+                              onPressed: () {
+                                print('Share');
+                                _takeScreenshotandShare();
+                              },
+                              icon: Icon(
+                                Icons.share,
+                                color: kSecondaryColor,
+                                size: 30,
+                              ),
+                            ),
                             AutoSizeText('Share',
                                 style: TextStyle(
                                     fontFamily: 'KievitOT',
                                     fontWeight: FontWeight.w300))
                           ],
                         ),
-                        SizedBox(width: 50,),
+                        SizedBox(
+                          width: 50,
+                        ),
                         Column(
                           children: <Widget>[
                             IconButton(
@@ -160,11 +174,11 @@ class _InformationState extends State<Information> {
                                 print('Refresh');
                                 Navigator.pop(context);
                                 onRefresh(1);
-
                               },
                               icon: Icon(
                                 Icons.refresh,
-                                color: kSecondaryColor,size: 30,
+                                color: kSecondaryColor,
+                                size: 30,
                               ),
                             ),
                             AutoSizeText('Refresh',
@@ -176,7 +190,7 @@ class _InformationState extends State<Information> {
                       ],
                     ),
                   );
-                });
+                }).whenComplete(() => _changed());
           },
           child: Column(
             children: <Widget>[
@@ -199,7 +213,7 @@ class _InformationState extends State<Information> {
                 child: new Text(
                   data.heading,
                   textAlign: TextAlign.left,
-                  style:Theme.of(context).textTheme.headline2 ,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
               new Padding(
@@ -208,18 +222,38 @@ class _InformationState extends State<Information> {
                     data.summary,
                     textAlign: TextAlign.justify,
                     maxLines: 9,
-                    style: Theme.of(context).textTheme.bodyText1 ,
-                  ))
+                    style: Theme.of(context).textTheme.bodyText1,
+                  )),
+              Spacer(),
+              Visibility(
+                  visible: show_temp_images,
+                  child: FutureBuilder(
+                    future: Future.delayed(Duration(seconds: 5)),
+                    builder: (c, s) => Expanded(
+                      child: Container(
+                          width: width,
+                          height: height * 0.15,
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          child: Align(
+                            alignment: FractionalOffset.bottomCenter,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Image.asset('assets/icons/google_play.png'),
+                                Container(
+                                  color: kBackgroundColor,
+                                  child:
+                                      Image.asset('assets/icons/screenShot2.png'),
+                                )
+                              ],
+                            ),
+                          )),
+                    ),
+                  )),
             ],
           ),
         ),
       ]),
-    );
-  }
-  add_temp_images(context)
-  {print("hellly");
-    return Positioned(bottom: 100,
-      child: Image.asset("assets/images/2.gif"),
     );
   }
 
@@ -277,14 +311,17 @@ class _InformationState extends State<Information> {
   }
 
   void onRefresh(int sec) {
-    ctrl.animateToPage(0,duration: Duration(seconds:sec),curve: Curves.easeIn);
+    ctrl.animateToPage(0,
+        duration: Duration(seconds: sec), curve: Curves.easeIn);
     _fetchData();
   }
 
   _takeScreenshotandShare() async {
     _imageFile = null;
     print(_imageFile);
-    screenshotController.capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0).then((File image) async {
+    screenshotController
+        .capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0)
+        .then((File image) async {
       setState(() {
         _imageFile = image;
       });
@@ -292,8 +329,11 @@ class _InformationState extends State<Information> {
       final directory = (await getApplicationDocumentsDirectory()).path;
       print(directory);
       Uint8List pngBytes = _imageFile.readAsBytesSync();
-      await Share.file('Scoop Feeds Shared News', 'screenshot.png', pngBytes, 'image/png',text: 'Read AI powered crisp and short summaries of latest news on Scoop Feeds.'
-          ' Download Now!!');
+      await Share.file(
+          'Scoop Feeds Shared News', 'screenshot.png', pngBytes, 'image/png',
+          text:
+              'Read AI powered crisp and short summaries of latest news on Scoop Feeds.'
+              ' Download Now!!');
     }).catchError((onError) {
       print(onError);
     });

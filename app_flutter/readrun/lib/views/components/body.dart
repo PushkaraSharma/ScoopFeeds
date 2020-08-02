@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:readrun/constants.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';
 import 'package:readrun/views/HomeScreen.dart';

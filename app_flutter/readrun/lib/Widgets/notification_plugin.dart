@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:rxdart/subjects.dart';
 
 import '../model/News.dart';
+import '../secrets.dart';
 
 class NotificationPlugin {
   //
@@ -116,7 +117,7 @@ class NotificationPlugin {
     isLoading = true;
     String heading,pic_url;
 
-    final response = await http.get("http://35.209.249.233:5000/" + 'top_stories' + "/");
+    final response = await http.get(api_key+ 'top_stories' + "/");
     if (response.statusCode == 200) {
       list = (json.decode(response.body) as List).map((data) => new News.fromJson(data)).toList();
       print(list[0].heading);

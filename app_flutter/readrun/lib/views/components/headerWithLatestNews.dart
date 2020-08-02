@@ -11,6 +11,8 @@ import 'package:readrun/views/HomeScreen.dart';
 import 'package:readrun/constants.dart';
 import 'package:http/http.dart' as http;
 
+import '../../secrets.dart';
+
 
 class HeaderWithLatestNews extends StatefulWidget {
   final Size size;
@@ -33,7 +35,7 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
       setState(() {
       isLoading = true;
     });
-    final response = await http.get("http://35.209.249.233:5000/" + 'top_stories' + "/");
+    final response = await http.get(api_key + 'top_stories' + "/");
     print(response);
     if (response.statusCode == 200) {
       list = (json.decode(response.body) as List)
