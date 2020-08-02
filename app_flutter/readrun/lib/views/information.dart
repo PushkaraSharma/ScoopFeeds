@@ -13,7 +13,6 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:screenshot/screenshot.dart';
 import '../secrets.dart';
 import 'HomeScreen.dart';
-import 'no_internet.dart';
 
 class Information extends StatefulWidget {
   final String topic;
@@ -39,13 +38,10 @@ class _InformationState extends State<Information> {
   var show_temp_images = false;
 
   _fetchData() async {
-
-
     setState(() {
       isLoading = true;
     });
-    final response =
-        await http.get(api_key + topic + "/");
+    final response = await http.get(api_key + topic + "/");
     if (response.statusCode == 200) {
       list = (json.decode(response.body) as List)
           .map((data) => new News.fromJson(data))
@@ -77,10 +73,20 @@ class _InformationState extends State<Information> {
   }
 
   void _changed() {
-    setState(() {
-      show_temp_images = !show_temp_images;
-    });
+    if(show_temp_images) {
+      setState(() {
+        show_temp_images = !show_temp_images;
+      });
+    }
+    else{
+      Future.delayed(const Duration(milliseconds: 200), () {
+        setState(() {
+          show_temp_images = !show_temp_images;
+        });
+      });
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -227,29 +233,24 @@ class _InformationState extends State<Information> {
               Spacer(),
               Visibility(
                   visible: show_temp_images,
-                  child: FutureBuilder(
-                    future: Future.delayed(Duration(seconds: 5)),
-                    builder: (c, s) => Expanded(
-                      child: Container(
-                          width: width,
-                          height: height * 0.15,
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: Align(
-                            alignment: FractionalOffset.bottomCenter,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Image.asset('assets/icons/google_play.png'),
-                                Container(
-                                  color: kBackgroundColor,
-                                  child:
-                                      Image.asset('assets/icons/screenShot2.png'),
-                                )
-                              ],
-                            ),
-                          )),
-                    ),
-                  )),
+                  child: Container(
+                      width: width,
+                      height: height * 0.12,
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: Align(
+                        alignment: FractionalOffset.bottomCenter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Image.asset('assets/icons/google_play.png',),
+                            Container(
+                              child: Image.asset(
+                                  'assets/icons/screenShot2.png'),
+                            )
+                          ],
+                        ),
+                      )),
+                  ),
             ],
           ),
         ),
