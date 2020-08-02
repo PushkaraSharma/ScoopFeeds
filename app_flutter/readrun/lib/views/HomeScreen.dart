@@ -1,7 +1,10 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:readrun/read_write.dart';
 import 'package:readrun/views/components/body.dart';
 import 'package:readrun/constants.dart';
 import '../Widgets/waveclip.dart';
@@ -77,7 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(fontFamily: 'KievitOT'),
                   ),
                   trailing: Switch(
-                        onChanged: (value) {
+                        onChanged: (value) async{
+                          var old_val = await readWrite.read('notification', 'true');
+                          print('old value  was $old_val');
+                          if(old_val=='true'){
+                            old_val = 'false';
+                          }
+                          else{
+                            old_val = 'true';
+                          }
+                          readWrite.write("$old_val", 'notification');
+                          print("Writed value on notfication as $old_val");
                           notifier.toggleNotification(value);
                           print(notifier.notification);
                         },
@@ -232,4 +245,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
 }

@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io' show File, InternetAddress, Platform, SocketException;
 import 'package:http/http.dart' as http;
 import 'package:rxdart/subjects.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../model/News.dart';
 import '../secrets.dart';
@@ -15,8 +16,8 @@ class NotificationPlugin {
   //
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   final BehaviorSubject<ReceivedNotification>
-  didReceivedLocalNotificationSubject =
-  BehaviorSubject<ReceivedNotification>();
+      didReceivedLocalNotificationSubject =
+      BehaviorSubject<ReceivedNotification>();
   var initializationSettings;
 
   NotificationPlugin._() {
@@ -33,7 +34,7 @@ class NotificationPlugin {
 
   initializePlatformSpecifics() {
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -52,12 +53,12 @@ class NotificationPlugin {
   _requestIOSPermission() {
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>()
+            IOSFlutterLocalNotificationsPlugin>()
         .requestPermissions(
-      alert: false,
-      badge: true,
-      sound: true,
-    );
+          alert: false,
+          badge: true,
+          sound: true,
+        );
   }
 
   setListenerForLowerVersions(Function onNotificationInLowerVersions) {
@@ -69,8 +70,8 @@ class NotificationPlugin {
   setOnNotificationClick(Function onNotificationClick) async {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String payload) async {
-          onNotificationClick(payload);
-        });
+      onNotificationClick(payload);
+    });
   }
 
   Future<void> repeatNotification() async {
@@ -85,7 +86,7 @@ class NotificationPlugin {
     );
     var iosChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics =
-    NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
+        NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
     await flutterLocalNotificationsPlugin.periodicallyShow(
       0,
       'Repeating Test Title',
@@ -97,72 +98,69 @@ class NotificationPlugin {
   }
 
   var isLoading = false;
-//  void checkNetThenNotify() {
-//    try {
-//      InternetAddress.lookup('google.com').then((result) {
-//        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-//          showNotificationWithAttachment();
-//        } else {
-//          print('No internet');
-//        }
-//      }).catchError((error) {
-//        print('No internet');
-//      });
-//    } on SocketException catch (_) {}
+
+//  Future<void> MainNotification() async {
+////    WidgetsFlutterBinding.ensureInitialized();
+//    await Workmanager.initialize(showNotificationWithAttachment,
+//        isInDebugMode:
+//            true); //to true if still in testing lev turn it to false whenever you are launching the app
+//    await Workmanager.registerPeriodicTask("5", "simplePeriodicTask",
+//        existingWorkPolicy: ExistingWorkPolicy.replace,
+//        frequency: Duration(minutes: 15),
+//        //when should it check the link
+//        initialDelay: Duration(seconds: 5),
+//        //duration before showing the notification
+//        constraints: Constraints(
+//          networkType: NetworkType.connected,
+//        ));
 //  }
 
-  Future<void> showNotificationWithAttachment(double range) async {
+  Future<void> showNotificationWithAttachment() async {
+    Workmanager.executeTask((task, inputData) async {
+      List<News> list = List();
+      isLoading = true;
+      String heading, pic_url;
 
-    List<News> list = List();
-    isLoading = true;
-    String heading,pic_url;
+      final response = await http.get(api_key + 'top_stories' + "/");
+      if (response.statusCode == 200) {
+        list = (json.decode(response.body) as List)
+            .map((data) => new News.fromJson(data))
+            .toList();
+        print(list[0].heading);
 
-    final response = await http.get(api_key+ 'top_stories' + "/");
-    if (response.statusCode == 200) {
-      list = (json.decode(response.body) as List).map((data) => new News.fromJson(data)).toList();
-      print(list[0].heading);
+        heading = list[0].heading;
+        pic_url = list[0].picUrl;
 
-      heading = list[0].heading;
-      pic_url = list[0].picUrl;
+        isLoading = false;
+      } else {
+        throw Exception('Failed to load News');
+      }
 
-      isLoading = false;
-    } else {
-      throw Exception('Failed to load News');
-    }
-
-    var attachmentPicturePath = await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
-    var iOSPlatformSpecifics = IOSNotificationDetails(
-      attachments: [IOSNotificationAttachment(attachmentPicturePath)],
-    );
-    var bigPictureStyleInformation = BigPictureStyleInformation(
-      FilePathAndroidBitmap(attachmentPicturePath),
-//      contentTitle: '<b>$heading</b>',
-//      htmlFormatContentTitle: true,
-      //summaryText: heading,
-//      htmlFormatSummaryText: true,
-    );
-    var androidChannelSpecifics = AndroidNotificationDetails(
-      'CHANNEL ID 2',
-      'CHANNEL NAME 2',
-      'CHANNEL DESCRIPTION 2',
-      importance: Importance.High,
-      priority: Priority.High,
-      styleInformation: bigPictureStyleInformation,
-      ongoing: true,
+      var attachmentPicturePath =
+          await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
+      var iOSPlatformSpecifics = IOSNotificationDetails(
+        attachments: [IOSNotificationAttachment(attachmentPicturePath)],
+      );
+      var bigPictureStyleInformation = BigPictureStyleInformation(
+          FilePathAndroidBitmap(attachmentPicturePath));
+      var androidChannelSpecifics = AndroidNotificationDetails(
+        'CHANNEL ID 2',
+        'CHANNEL NAME 2',
+        'CHANNEL DESCRIPTION 2',
+        importance: Importance.High,
+        priority: Priority.High,
+        styleInformation: bigPictureStyleInformation,
+        ongoing: true,
         icon: 'app_icon',
         color: Colors.white,
-    );
-    var notificationDetails =
-    NotificationDetails(androidChannelSpecifics, iOSPlatformSpecifics);
+      );
+      var notificationDetails =
+          NotificationDetails(androidChannelSpecifics, iOSPlatformSpecifics);
 
-    await flutterLocalNotificationsPlugin.periodicallyShow(
-        0,
-        'Breaking News',
-        heading,
-        RepeatInterval.Hourly,
-        notificationDetails
-    );
-
+      await flutterLocalNotificationsPlugin.show(
+          0, 'Breaking News', heading, notificationDetails);
+      return Future.value(true);
+    });
   }
 
   _downloadAndSaveFile(String url, String fileName) async {
@@ -176,7 +174,7 @@ class NotificationPlugin {
 
   Future<int> getPendingNotificationCount() async {
     List<PendingNotificationRequest> p =
-    await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     return p.length;
   }
 

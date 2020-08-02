@@ -10,7 +10,7 @@ import 'package:readrun/views/no_internet.dart';
 import 'package:readrun/views/HomeScreen.dart';
 import 'package:readrun/constants.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:readrun/read_write.dart';
 import '../../secrets.dart';
 
 
@@ -31,7 +31,7 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
   var isLoading = false;
   String firstPicUrl='NotFound';
   _fetchData() async {
-     firstPicUrl = await _read();
+     firstPicUrl = await readWrite.read("firstUrl","NotFound");
       setState(() {
       isLoading = true;
     });
@@ -41,11 +41,11 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
       list = (json.decode(response.body) as List)
           .map((data) => new News.fromJson(data))
           .toList();
-      _write(list[0].picUrl);
+      readWrite.write(list[0].picUrl,"firstUrl");
       setState(() {
         isLoading = false;
       });
-      firstPicUrl = await _read();
+      firstPicUrl = await readWrite.read("firstUrl","NotFound");
     } else {
       throw Exception('Failed to load News');
     }
@@ -215,27 +215,27 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
 //      ),
 //    );
   }
-  _write(String text) async {
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final File file = File('${directory.path}/firstUrl.txt');
-    await file.writeAsString(text);
-  }
-  Future<String> _read() async {
-    String text;
-    try {
-      final Directory directory = await getApplicationDocumentsDirectory();
-      var path = '${directory.path}/firstUrl.txt';
-      if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
-        final File file = File(path);
-        text = await file.readAsString();
-      }
-      else{
-        text = 'NotFound';
-      }
-    } catch (e) {
-      print("Couldn't read file");
-    }
-    return text;
-  }
+//  _write(String text,String filename) async {
+//    final Directory directory = await getApplicationDocumentsDirectory();
+//    final File file = File('${directory.path}/$filename.txt');
+//    await file.writeAsString(text);
+//  }
+//  Future<String> _read(String filename) async {
+//    String text;
+//    try {
+//      final Directory directory = await getApplicationDocumentsDirectory();
+//      var path = '${directory.path}/$filename.txt';
+//      if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
+//        final File file = File(path);
+//        text = await file.readAsString();
+//      }
+//      else{
+//        text = 'NotFound';
+//      }
+//    } catch (e) {
+//      print("Couldn't read file");
+//    }
+//    return text;
+//  }
 
 }
