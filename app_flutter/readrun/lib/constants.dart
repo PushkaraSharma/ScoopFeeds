@@ -8,7 +8,7 @@ const kBackgroundColor = Color(0xFFF9F8FD);
 
 const double kDefaultPadding = 20.0;
 
-const dPrimaryColor = Color(0xff1d7ca7);
+const dPrimaryColor = Color(0xff10516e);
 const dTextColor = Color(0xFFF9F8FD);
 const dSecondaryColor = Color(0xff53b4df);
 const dBackgroundColor = Color(0xFF3C4046);

@@ -37,12 +37,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   initScreen(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(padding: EdgeInsets.only(top: 20.0)),
-            Image.asset("assets/icons/logo_intro.png",),
+            Image.asset("assets/icons/logo_intro.png",height: height*0.2,),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             CircularProgressIndicator(
 //              backgroundColor: Colors.white,

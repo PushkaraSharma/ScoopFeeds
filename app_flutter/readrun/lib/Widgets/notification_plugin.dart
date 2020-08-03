@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' show File, InternetAddress, Platform, SocketException;
 import 'package:http/http.dart' as http;
 import 'package:rxdart/subjects.dart';
-import 'package:workmanager/workmanager.dart';
-
 import '../model/News.dart';
 import '../secrets.dart';
 
@@ -74,93 +70,51 @@ class NotificationPlugin {
     });
   }
 
-  Future<void> repeatNotification() async {
-    print('Its here in plugin');
-    var androidChannelSpecifics = AndroidNotificationDetails(
-      'CHANNEL_ID 3',
-      'CHANNEL_NAME 3',
-      "CHANNEL_DESCRIPTION 3",
-      importance: Importance.Max,
-      priority: Priority.High,
-      styleInformation: DefaultStyleInformation(true, true),
-    );
-    var iosChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics =
-        NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
-    await flutterLocalNotificationsPlugin.periodicallyShow(
-      0,
-      'Repeating Test Title',
-      'Repeating Test Body',
-      RepeatInterval.EveryMinute,
-      platformChannelSpecifics,
-      payload: 'Test Payload',
-    );
-  }
-
   var isLoading = false;
 
-//  Future<void> MainNotification() async {
-////    WidgetsFlutterBinding.ensureInitialized();
-//    await Workmanager.initialize(showNotificationWithAttachment,
-//        isInDebugMode:
-//            true); //to true if still in testing lev turn it to false whenever you are launching the app
-//    await Workmanager.registerPeriodicTask("5", "simplePeriodicTask",
-//        existingWorkPolicy: ExistingWorkPolicy.replace,
-//        frequency: Duration(minutes: 15),
-//        //when should it check the link
-//        initialDelay: Duration(seconds: 5),
-//        //duration before showing the notification
-//        constraints: Constraints(
-//          networkType: NetworkType.connected,
-//        ));
-//  }
-
   Future<void> showNotificationWithAttachment() async {
-    Workmanager.executeTask((task, inputData) async {
-      List<News> list = List();
-      isLoading = true;
-      String heading, pic_url;
+    List<News> list = List();
+    isLoading = true;
+    String heading, pic_url;
 
-      final response = await http.get(api_key + 'top_stories' + "/");
-      if (response.statusCode == 200) {
-        list = (json.decode(response.body) as List)
-            .map((data) => new News.fromJson(data))
-            .toList();
-        print(list[0].heading);
+    final response = await http.get(api_key + 'top_stories' + "/");
+    if (response.statusCode == 200) {
+      list = (json.decode(response.body) as List)
+          .map((data) => new News.fromJson(data))
+          .toList();
+      print(list[0].heading);
 
-        heading = list[0].heading;
-        pic_url = list[0].picUrl;
+      heading = list[0].heading;
+      pic_url = list[0].picUrl;
 
-        isLoading = false;
-      } else {
-        throw Exception('Failed to load News');
-      }
+      isLoading = false;
+    } else {
+      throw Exception('Failed to load News');
+    }
 
-      var attachmentPicturePath =
-          await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
-      var iOSPlatformSpecifics = IOSNotificationDetails(
-        attachments: [IOSNotificationAttachment(attachmentPicturePath)],
-      );
-      var bigPictureStyleInformation = BigPictureStyleInformation(
-          FilePathAndroidBitmap(attachmentPicturePath));
-      var androidChannelSpecifics = AndroidNotificationDetails(
-        'CHANNEL ID 2',
-        'CHANNEL NAME 2',
-        'CHANNEL DESCRIPTION 2',
-        importance: Importance.High,
-        priority: Priority.High,
-        styleInformation: bigPictureStyleInformation,
-        ongoing: true,
-        icon: 'app_icon',
-        color: Colors.white,
-      );
-      var notificationDetails =
-          NotificationDetails(androidChannelSpecifics, iOSPlatformSpecifics);
+    var attachmentPicturePath =
+        await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
+    var iOSPlatformSpecifics = IOSNotificationDetails(
+      attachments: [IOSNotificationAttachment(attachmentPicturePath)],
+    );
+    var bigPictureStyleInformation = BigPictureStyleInformation(
+        FilePathAndroidBitmap(attachmentPicturePath));
+    var androidChannelSpecifics = AndroidNotificationDetails(
+      'CHANNEL ID 2',
+      'CHANNEL NAME 2',
+      'CHANNEL DESCRIPTION 2',
+      importance: Importance.High,
+      priority: Priority.High,
+      styleInformation: bigPictureStyleInformation,
+      ongoing: true,
+      icon: 'app_icon',
+      color: Colors.white,
+    );
+    var notificationDetails =
+        NotificationDetails(androidChannelSpecifics, iOSPlatformSpecifics);
 
-      await flutterLocalNotificationsPlugin.show(
-          0, 'Breaking News', heading, notificationDetails);
-      return Future.value(true);
-    });
+    await flutterLocalNotificationsPlugin.show(
+        0, 'Breaking News', heading, notificationDetails);
   }
 
   _downloadAndSaveFile(String url, String fileName) async {

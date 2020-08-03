@@ -6,9 +6,13 @@ import '../constants.dart';
 ThemeData light = ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
+          toggleableActiveColor: kPrimaryColor ,
+//          primaryColorLight: kPrimaryColor,
           textTheme: TextTheme(headline2:TextStyle(color: Colors.black, fontSize: 23, fontWeight: FontWeight.w700, decoration: TextDecoration.none, fontFamily: 'CharterITC'),
            bodyText1: TextStyle(fontSize: 17.0, color: Colors.black54, decoration: TextDecoration.none, fontFamily: 'KievitOT', fontWeight: FontWeight.w300),
+            bodyText2: TextStyle(color: Colors.black, decoration: TextDecoration.none, fontFamily: 'KievitOT'),
           ),
+          sliderTheme: SliderThemeData(activeTrackColor: kPrimaryColor),
           visualDensity: VisualDensity.adaptivePlatformDensity,
          brightness: Brightness.light,
 
@@ -18,10 +22,14 @@ ThemeData dark = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: dBackgroundColor,
   primaryColor: dPrimaryColor,
+  toggleableActiveColor: kSecondaryColor ,
+//  primaryColorLight: kSecondaryColor,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   textTheme: TextTheme(headline2:TextStyle(color: Colors.white, fontSize: 23, fontWeight: FontWeight.w700, decoration: TextDecoration.none, fontFamily: 'CharterITC'),
     bodyText1: TextStyle(fontSize: 17.0, color: dTextColor, decoration: TextDecoration.none, fontFamily: 'KievitOT', fontWeight: FontWeight.w300),
+    bodyText2: TextStyle(color: dTextColor, decoration: TextDecoration.none, fontFamily: 'KievitOT'),
   ),
+  sliderTheme: SliderThemeData(activeTrackColor: kSecondaryColor),
 );
 
 class ThemeNotifier extends ChangeNotifier {

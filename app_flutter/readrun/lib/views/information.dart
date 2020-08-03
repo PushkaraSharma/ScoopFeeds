@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -120,10 +121,6 @@ class _InformationState extends State<Information> {
 
   // Builder Functions
   _buildStoryPage(News data, bool active) {
-    // Animated Properties
-//    final double blur = active ? 30 : 0;
-//    final double offset = active ? 20 : 0;
-//    final double top = active ? 100 : 200;
 
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -206,11 +203,16 @@ class _InformationState extends State<Information> {
                 child: ClipPath(
                   clipper: ClippingClass(),
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fill, image: NetworkImage(data.picUrl)),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: data.picUrl,
+                    placeholder: (context, url) => Image.asset(
+                      'assets/images/new_image_placeholder.png',
+                      fit: BoxFit.fill,
                     ),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.error),
+                  ),
                   ),
                 ),
               ),
