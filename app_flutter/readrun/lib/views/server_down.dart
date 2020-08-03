@@ -25,18 +25,18 @@ class _Server_DownState extends State<Server_Down> {
 //          color: Colors.white,
           child: Column(children: <Widget>[
             SizedBox(height: height*0.15,),
-            Image(image: AssetImage('assets/images/undraw_server_down_s4lk.png'),
+            Image(image: AssetImage('assets/images/server_down.png',),
+              height: height*0.3,
             ),
             SizedBox(height: 20,),
-            AutoSizeText("Server Down!",style: TextStyle(fontSize: 20,fontFamily: 'KievitOT'),),
-            SizedBox(height: 15,),
+            AutoSizeText("Server Down!",style: TextStyle(fontSize: 18,fontFamily: 'KievitOT',fontWeight: FontWeight.bold),),
+            SizedBox(height: 12,),
             AutoSizeText("Server is down for maintenance, Retry later",
-//              style: TextStyle(fontSize: 15,color:Colors.black54,fontFamily: 'KievitOT'),
-            style: Theme.of(context).textTheme.bodyText1,
+              style: TextStyle(fontSize: 14,fontFamily: 'KievitOT'),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 25,),
             Container(
-              width: 160,
+              width: 120,
               child: RaisedButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
@@ -48,12 +48,12 @@ class _Server_DownState extends State<Server_Down> {
                 },
                 child:
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: Text(
                     "Home",
                     style: TextStyle(
                         fontFamily: 'KievitOT',
-                        fontSize: 25
+                        fontSize: 20
                     ),
                   ),
                 ),

@@ -261,24 +261,20 @@ class _InformationState extends State<Information> {
   }
 
   _buildEndPage() {
+    final height = MediaQuery.of(context).size.height;
     return Container(
-//      color: Colors.white,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              child: Image.asset("assets/images/2.gif"),
+              child: Image.asset("assets/images/no_more.png",height:height*0.3 ,),
             ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             Text(
               "You have read all Stories",
-              style: TextStyle(
-                  fontSize: 20.0,
-                  color: kTextColor,
-                  fontFamily: 'KievitOT',
-                  decoration: TextDecoration.none,
-                  fontWeight: FontWeight.w400),
+             style: Theme.of(context).textTheme.bodyText2 ,
             ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             Container(
@@ -303,7 +299,6 @@ class _InformationState extends State<Information> {
                     )
                   ],
                 ),
-                color: kSecondaryColor,
                 elevation: 5,
               ),
             )

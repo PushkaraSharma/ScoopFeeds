@@ -32,18 +32,46 @@ class _No_internetState extends State<No_internet> {
 //          color: Colors.white,
           child: Column(children: <Widget>[
             SizedBox(height: height*0.15,),
-            Image(image: AssetImage('assets/images/no_net.gif'),
+            Image(image: AssetImage('assets/images/no_net.png'),
+              height: height*0.3,
             ),
             SizedBox(height: 20,),
-            AutoSizeText("No Internet Connection!",style: TextStyle(fontSize: 20,fontFamily: 'KievitOT'),),
+            AutoSizeText("No Internet Connection!",style: TextStyle(fontSize: 18,fontFamily: 'KievitOT',fontWeight: FontWeight.bold),),
             SizedBox(height: 15,),
             AutoSizeText("Please check your internet connection and retry",
-//              style: TextStyle(fontSize: 15,color:Colors.black54,fontFamily: 'KievitOT'),
-            style: Theme.of(context).textTheme.bodyText1,
+              style: TextStyle(fontSize: 14,fontFamily: 'KievitOT'),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 25,),
             Container(
-              width: 160,
+              width: 120,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                onPressed: () {
+                  print('Home');
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+                          (Route<dynamic> route) => route is HomeScreen);
+                },
+                child:
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    "Home",
+                    style: TextStyle(
+                        fontFamily: 'KievitOT',
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+                color: kSecondaryColor,
+                elevation: 5,
+
+              ),
+            ),
+            SizedBox(height: 25,),
+            Container(
+              width: 120,
               child: RaisedButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
@@ -65,22 +93,25 @@ class _No_internetState extends State<No_internet> {
                   } on SocketException catch (_) {
                   }
                 },
-                child:
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "Retry",
-                        style: TextStyle(
-                          fontFamily: 'KievitOT',
-                          fontSize: 25
-                        ),
-                      ),
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.refresh),
+                    SizedBox(
+                      width: 10,
                     ),
+                    Text(
+                      "Retry",
+                      style: TextStyle(
+                        fontFamily: 'KievitOT',
+                      ),
+                    )
+                  ],
+                ),
                 color: kSecondaryColor,
-                elevation: 5,
-
+                elevation: 0,
               ),
             )
+
 
           ],),
 

@@ -25,14 +25,14 @@ class _FetchingNewsState extends State<FetchingNews> {
         });}
     });
     return Scaffold(
-//      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Align(
         alignment: Alignment.center,
         child: Container(
 //          color: Colors.white,
             height: height*0.4,width: width*0.6,
               child: Column(children: <Widget>[
-              Image(image: AssetImage('assets/images/dribble-guy-cloud-800x600.gif'),
+              Image(image: AssetImage('assets/images/loading_cloud.gif'),
                 ),
               SizedBox(height: 15,),
               AutoSizeText("Fetching Fresh News",style: TextStyle(fontSize: 20,fontFamily: 'KievitOT'),)
