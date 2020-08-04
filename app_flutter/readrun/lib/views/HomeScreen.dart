@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:readrun/Widgets/policies_dialog.dart';
 import 'package:readrun/views/components/body.dart';
 import 'package:readrun/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -191,6 +192,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ListTile(
                           onTap: () {
                             debugPrint("Tapped Log Out");
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PolicyDialog(
+                                      mdFileName: 'privacy_policy.md');
+                                });
                           },
                           title: Text("Privacy",
                               style: TextStyle(fontFamily: 'KievitOT')),
@@ -198,6 +205,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ListTile(
                           onTap: () {
                             debugPrint("Tapped Notifications");
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PolicyDialog(
+                                      mdFileName: 'termsAndConditions.md');
+                                });
                           },
                           title: Text("Terms & Conditions",
                               style: TextStyle(fontFamily: 'KievitOT')),
