@@ -20,7 +20,7 @@ Future<void> main() async {
   await Workmanager.registerPeriodicTask("5", simplePeriodicTask,
       existingWorkPolicy: ExistingWorkPolicy.replace,
       frequency: Duration(minutes: time),
-      initialDelay: Duration(seconds: 1),
+      initialDelay: Duration(seconds: time),
       constraints: Constraints(
         networkType: NetworkType.connected,
       ));

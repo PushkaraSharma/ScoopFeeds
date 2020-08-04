@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   double Slidervalue = 12;
 
@@ -169,10 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: <Widget>[
                         ListTile(
-                          onTap: () {
-                            debugPrint(
-                              "Share this app",
-                            );
+                          onTap: () async {
+                            debugPrint("Share this app");
+                            await Share.text("Share app","Check out Scoop Feeds app. This is the best AI powered news reading app I found https://ssjbdiusb.com",'text/plain' );
                           },
                           title: Text("Share this app",
                               style: TextStyle(fontFamily: 'KievitOT')),

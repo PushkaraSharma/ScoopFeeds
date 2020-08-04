@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:readrun/constants.dart';
 
 class TitleWithMoreBtn extends StatelessWidget {
@@ -19,17 +18,6 @@ class TitleWithMoreBtn extends StatelessWidget {
         children: <Widget>[
           TitleWithCustomUnderline(text: title),
           Spacer(),
-//          FlatButton(
-//            shape: RoundedRectangleBorder(
-//              borderRadius: BorderRadius.circular(20),
-//            ),
-//            color: kPrimaryColor,
-//            onPressed: press,
-//            child: Text(
-//              "More",
-//              style: TextStyle(color: Colors.white),
-//            ),
-//          ),
         ],
       ),
     );
