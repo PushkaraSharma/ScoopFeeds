@@ -6,6 +6,7 @@ import 'package:readrun/Widgets/policies_dialog.dart';
 import 'package:readrun/views/components/body.dart';
 import 'package:readrun/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wiredash/wiredash.dart';
 import '../Widgets/waveclip.dart';
 import '../Widgets/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -220,7 +221,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         ListTile(
                           onTap: () {
-                            debugPrint("Tapped Notifications");
+                            debugPrint("Tapped Feedback");
+                            Wiredash.of(context).show();
                           },
                           title: Text("Feedback",
                               style: TextStyle(fontFamily: 'KievitOT')),
