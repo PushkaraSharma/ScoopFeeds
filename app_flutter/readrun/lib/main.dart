@@ -13,14 +13,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Workmanager.initialize(callbackDispatcher, isInDebugMode: false);
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var timings = prefs.getDouble("slider")??6;
+  var timings = prefs.getDouble("slider")??12;
   print("Slider value is $timings");
   var time = ((24/timings)*60).toInt();
   print("Timing of notification changed $time");
   await Workmanager.registerPeriodicTask("5", simplePeriodicTask,
       existingWorkPolicy: ExistingWorkPolicy.replace,
       frequency: Duration(minutes: time),
-      initialDelay: Duration(minutes: time),
+      initialDelay: Duration(seconds: 1),
       constraints: Constraints(
         networkType: NetworkType.connected,
       ));

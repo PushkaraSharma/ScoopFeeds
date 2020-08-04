@@ -16,11 +16,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  double Slidervalue = 6;
+  double Slidervalue = 12;
 
   loadSlider() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Slidervalue = prefs.getDouble('slider') ?? 6;
+    Slidervalue = prefs.getDouble('slider') ?? 12;
   }
 
   Widget build(BuildContext context) {
@@ -111,9 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 });
                                 prefs.setDouble('slider', Slidervalue);
                               },
-                              divisions: 4,
-                              min: 2,
-                              max: 10,
+                              divisions: 3,
+                              min: 6,
+                              max: 24,
                               label: "$Slidervalue",
                             )
                           ],

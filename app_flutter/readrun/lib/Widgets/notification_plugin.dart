@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' show File, InternetAddress, Platform, SocketException;
 import 'package:http/http.dart' as http;
+import 'package:readrun/constants.dart';
 import 'package:rxdart/subjects.dart';
 import '../model/News.dart';
 import '../secrets.dart';
@@ -70,6 +71,7 @@ class NotificationPlugin {
     });
   }
 
+
   var isLoading = false;
 
   Future<void> showNotificationWithAttachment() async {
@@ -88,9 +90,7 @@ class NotificationPlugin {
       pic_url = list[0].picUrl;
 
       isLoading = false;
-    } else {
-      throw Exception('Failed to load News');
-    }
+
 
     var attachmentPicturePath =
         await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
@@ -98,7 +98,10 @@ class NotificationPlugin {
       attachments: [IOSNotificationAttachment(attachmentPicturePath)],
     );
     var bigPictureStyleInformation = BigPictureStyleInformation(
-        FilePathAndroidBitmap(attachmentPicturePath));
+        FilePathAndroidBitmap(attachmentPicturePath),
+        largeIcon:DrawableResourceAndroidBitmap("large_icon"),
+      contentTitle: heading,
+    );
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL ID 2',
       'CHANNEL NAME 2',
@@ -106,15 +109,20 @@ class NotificationPlugin {
       importance: Importance.High,
       priority: Priority.High,
       styleInformation: bigPictureStyleInformation,
-      ongoing: true,
+      ongoing: false,
+      autoCancel: true,
       icon: 'app_icon',
-      color: Colors.white,
+      color: kSecondaryColor,
     );
     var notificationDetails =
         NotificationDetails(androidChannelSpecifics, iOSPlatformSpecifics);
 
     await flutterLocalNotificationsPlugin.show(
-        0, 'Breaking News', heading, notificationDetails);
+        0, heading,"Read more...", notificationDetails);
+    }
+    else {
+        throw Exception('Failed to load News');
+     }
   }
 
   _downloadAndSaveFile(String url, String fileName) async {
