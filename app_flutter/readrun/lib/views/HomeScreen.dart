@@ -9,7 +9,7 @@ import 'package:readrun/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wiredash/wiredash.dart';
 import '../Widgets/waveclip.dart';
-import '../Widgets/theme.dart';
+import '../model/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -181,13 +181,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 2,
                         ),
-                        ListTile(
-                          onTap: () {
-                            debugPrint("Tapped Notifications");
-                          },
-                          title: Text("Rate this app",
-                              style: TextStyle(fontFamily: 'KievitOT')),
-                        ),
+  //rate will appear it self
+//                        ListTile(
+//                          onTap: () {
+//                            debugPrint("Tapped Notifications");
+//                          },
+//                          title: Text("Rate this app",
+//                              style: TextStyle(fontFamily: 'KievitOT')),
+//                        ),
                         SizedBox(
                           height: 2,
                         ),

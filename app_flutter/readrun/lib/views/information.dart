@@ -198,7 +198,7 @@ class _InformationState extends State<Information> {
           child: Column(
             children: <Widget>[
               Container(
-                height: height * 0.5,
+                height: height * 0.45,
                 width: width,
                 child: ClipPath(
                   clipper: ClippingClass(),
@@ -218,8 +218,8 @@ class _InformationState extends State<Information> {
               ),
               new Padding(
                 padding: new EdgeInsets.fromLTRB(12.0, 18.0, 12.0, 10.0),
-                child: new Text(
-                  data.heading,
+                child: new AutoSizeText(
+                  data.heading,maxLines: 3,
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.headline2,
                 ),

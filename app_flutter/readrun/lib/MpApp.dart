@@ -4,7 +4,7 @@ import 'package:readrun/secrets.dart';
 import 'package:wiredash/wiredash.dart';
 
 import 'Splash_screen.dart';
-import 'Widgets/theme.dart';
+import 'model/theme.dart';
 import 'main.dart';
 
 

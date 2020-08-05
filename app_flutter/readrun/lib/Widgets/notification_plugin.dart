@@ -31,7 +31,7 @@ class NotificationPlugin {
 
   initializePlatformSpecifics() {
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -91,7 +91,6 @@ class NotificationPlugin {
 
       isLoading = false;
 
-
     var attachmentPicturePath =
         await _downloadAndSaveFile(pic_url, 'attachment_img.jpg');
     var iOSPlatformSpecifics = IOSNotificationDetails(
@@ -99,7 +98,7 @@ class NotificationPlugin {
     );
     var bigPictureStyleInformation = BigPictureStyleInformation(
         FilePathAndroidBitmap(attachmentPicturePath),
-        largeIcon:DrawableResourceAndroidBitmap("large_icon"),
+        largeIcon:DrawableResourceAndroidBitmap('ic_launcher'),
       contentTitle: heading,
     );
     var androidChannelSpecifics = AndroidNotificationDetails(

@@ -1,5 +1,4 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'MpApp.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -20,10 +19,16 @@ Future<void> main() async {
   await Workmanager.registerPeriodicTask("5", simplePeriodicTask,
       existingWorkPolicy: ExistingWorkPolicy.replace,
       frequency: Duration(minutes: time),
-      initialDelay: Duration(seconds: time),
+      initialDelay: Duration(minutes: time),
       constraints: Constraints(
         networkType: NetworkType.connected,
       ));
+//  runApp(
+//    DevicePreview(
+//      enabled: !kReleaseMode,
+//      builder: (context) => MyApp(),
+//    ),
+//  );
   runApp(MyApp());
 }
 

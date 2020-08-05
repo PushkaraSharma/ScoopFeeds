@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -14,10 +15,12 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+
   @override
   Widget build(BuildContext context) {
     // It will provie us total height  and width of our screen
     Size size = MediaQuery.of(context).size;
+//    print(size.height);
     // it enable scrolling on small device
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +38,7 @@ class _BodyState extends State<Body> {
                   'assets/images/undraw_track_and_field_33qn.png', "sports"),
               myitems(
                   'Technology',
-                  'assets/images/undraw_visionary_technology_33jy.png',
+                  'assets/images/undraw_programmer_imem.png',
                   "tech"),
               myitems(
                 'Gaming',
@@ -64,13 +67,13 @@ class _BodyState extends State<Body> {
               ),
             ],
             staggeredTiles: [
-              StaggeredTile.extent(1, 150),
-              StaggeredTile.extent(1, 150),
-              StaggeredTile.extent(1, 150),
-              StaggeredTile.extent(1, 150),
-              StaggeredTile.extent(1, 150),
-              StaggeredTile.extent(1, 150),
-              StaggeredTile.extent(1, 150),
+              StaggeredTile.extent(1, size.height*0.194),
+              StaggeredTile.extent(1, size.height*0.194),
+              StaggeredTile.extent(1, size.height*0.194),
+              StaggeredTile.extent(1, size.height*0.194),
+              StaggeredTile.extent(1, size.height*0.194),
+              StaggeredTile.extent(1, size.height*0.194),
+              StaggeredTile.extent(1, size.height*0.194),
             ],
           ),
         ),
@@ -134,11 +137,12 @@ class _BodyState extends State<Body> {
                     child: new Image(
                       image: AssetImage(pic),
                       fit: BoxFit.cover,
+                      height:90 ,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    child: Text(heading, style: TextStyle(fontSize: 15.0,fontFamily: 'KievitOT')),
+                    child: AutoSizeText(heading,maxLines: 1, style: TextStyle(fontSize: 15.0,fontFamily: 'KievitOT')),
                   )
                 ],
               )),
