@@ -11,7 +11,17 @@ Created on Sat Jun 27 14:05:57 2020
 
 import background_job_process
 
-background_job_process.scrap("https://www.indiatoday.in/top-stories",'top_stories.json')
-#background_process_testing.scrap('https://www.indiatoday.in/technology/news','tech_new.json')
-#background_process_testing.scrap_sports('https://www.indiatoday.in/sports','sports_new.json')
-#background_process_testing.scrap_gaming('https://www.gamesradar.com/news/','gaming_new.json')
+background_job_process.scrap("https://www.indiatoday.in/top-stories",'data/top_stories.json')
+background_job_process.scrap("https://www.indiatoday.in/business",'data/business.json')
+background_job_process.scrap('https://www.indiatoday.in/technology/news','data/tech_new.json')
+background_job_process.scrap('https://www.indiatoday.in/coronavirus-covid-19-outbreak','data/corona.json')
+background_job_process.scrap('https://www.indiatoday.in/world','data/world.json')
+background_job_process.scrap('https://www.indiatoday.in/trending-news','data/trending.json')
+
+
+background_job_process.scrap_others('https://www.indiatoday.in/sports','data/sports_new.json')
+background_job_process.scrap_others('https://www.indiatoday.in/auto','data/automobile.json')
+background_job_process.scrap_others('https://www.indiatoday.in/lifestyle','data/lifestyle.json')
+
+background_job_process.scrap_gaming('https://www.gamesradar.com/news/','data/gaming_new.json')
+

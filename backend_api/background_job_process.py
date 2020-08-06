@@ -23,7 +23,7 @@ import pandas as pd
 
 def scrap(url_,file_name):    
     
-    df2 = pd.read_json(file_name)
+    df2 = pd.read_json(file_name,encoding='utf-8')
     first = df2['heading'][0]
 
     web = url.urlopen(url_)
@@ -49,9 +49,9 @@ def scrap(url_,file_name):
                 continue
             
             #implementation to only scrap and process those news which afre fresh
-            #and are not in our top 10 stories
+            #and are not in our top 50 stories
             
-            head = head.text.encode('ascii', 'replace').decode()
+            head = head.text
             print("Heading from scrap:\n",head)
             if(head==first):
                 print("\n+++++EQUAL+++++++++++++++++\n")
@@ -63,7 +63,7 @@ def scrap(url_,file_name):
             newss = new_page.find('div',itemprop='articleBody')
             if(newss is None):
                 continue
-            f_news = newss.text.encode('ascii', 'replace').decode()
+            f_news = newss.text
             for i in range(len(f_news)):
                 if(f_news[i]=='R' and f_news[i+1]=='E' and f_news[i+2]=='A' and f_news[i+3]=='D'):
                     f_news = f_news[:i]
@@ -81,11 +81,11 @@ def scrap(url_,file_name):
     if(len(df['heading'])>30):
         df = df.iloc[0:30,:]
 
-    df.to_json(file_name,orient='records')
+    df.to_json(file_name,orient='records',force_ascii=False)
     
-def scrap_sports(url_,file_name):    
+def scrap_others(url_,file_name):    
     
-    df2 = pd.read_json(file_name)
+    df2 = pd.read_json(file_name,encoding='utf-8')
     first = df2['heading'][0]
     
     print("Heading from json:\n",first)
@@ -112,7 +112,7 @@ def scrap_sports(url_,file_name):
         
             new_web =  url.urlopen("https://www.indiatoday.in"+temp_hrefs[i])
             new_page = bs4.BeautifulSoup(new_web,'lxml')
-            head = headings[i].encode('ascii', 'replace').decode()
+            head = headings[i]
             if(head is None):
                 continue
             #implementation to only scrap and process those news which afre fresh
@@ -122,6 +122,7 @@ def scrap_sports(url_,file_name):
             if(head==first):
                 print("\n+++++EQUAL+++++++++++++++++\n")
                 break
+        
             pic_link = new_page.find('img', itemprop='contentUrl')
             pics = pic_link['data-src']   
             if(pics is None):
@@ -129,7 +130,7 @@ def scrap_sports(url_,file_name):
             newss = new_page.find('div',itemprop='articleBody')
             if(newss is None):
                 continue
-            f_news = newss.text.encode('ascii', 'replace').decode()
+            f_news = newss.text
             temp = f_news.split()
             temp = temp[:374]
             f_news = ' '.join(temp)
@@ -141,17 +142,18 @@ def scrap_sports(url_,file_name):
             c+=1
             
         except:
-            print("Some Internal Error in sports section") 
+            print("Some Internal Error in sports section")
+            
         
     df = df.append(df2)
     if(len(df['heading'])>30):
         df = df.iloc[0:30,:]
 
-    df.to_json(file_name,orient='records')
+    df.to_json(file_name,orient='records',force_ascii=False)
 
 def scrap_gaming(url_,file_name):    
     
-    df2 = pd.read_json(file_name)
+    df2 = pd.read_json(file_name,encoding='utf-8')
     first = df2['heading'][0]
     print("Heading from json:\n",first)
 
@@ -176,7 +178,7 @@ def scrap_gaming(url_,file_name):
         
             new_web =  url.urlopen(temp_hrefs[i])
             new_page = bs4.BeautifulSoup(new_web,'lxml')
-            head = new_page.find('h1').text.encode('ascii', 'replace').decode()
+            head = new_page.find('h1').text
             if(head is None):
                 continue
             #implementation to only scrap and process those news which afre fresh
@@ -209,5 +211,5 @@ def scrap_gaming(url_,file_name):
     if(len(df['heading'])>30):
        df = df.iloc[0:30,:]
 
-    df.to_json(file_name,orient='records')
+    df.to_json(file_name,orient='records',force_ascii = False)
 
