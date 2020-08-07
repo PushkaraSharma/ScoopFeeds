@@ -227,7 +227,8 @@ class _InformationState extends State<Information> {
               new Padding(
                   padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
                   child: new AutoSizeText(
-                    data.summary,
+//                    data.summary,
+                  "Police departments across the country share creative and witty posts on social media. Netizens laughed hard as they addressed a sarcastic tweet to scammers. They posted several screenshots of fraudulent messages sent to people by scammer. The tweet has garnered over 700 likes. It has been shared by the police department since being shared on twitter.com, which is the best tweet I've seen today. If you have any questions, please contact us.",
                     textAlign: TextAlign.justify,
                     maxLines: 9,
                     style: Theme.of(context).textTheme.bodyText1,
