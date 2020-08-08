@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readrun/secrets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wiredash/wiredash.dart';
 
 import 'Splash_screen.dart';
 import 'model/theme.dart';
 import 'main.dart';
+import 'onboarding.dart';
 
 
 class MyApp extends StatefulWidget {
+
+  final bool showOnboard;
+
+  MyApp({Key key, @required this.showOnboard}) : super(key: key);
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState(showOnboard:this.showOnboard);
 }
 
 class _MyAppState extends State<MyApp> {
+  bool showOnboard;
+
+  _MyAppState({this.showOnboard});
 
   final navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
+
 
     return ChangeNotifierProvider(
         create: (_) => ThemeNotifier(),
@@ -36,7 +47,7 @@ class _MyAppState extends State<MyApp> {
                     debugShowCheckedModeBanner: false,
                     title: 'Scoop Feeds',
                     theme: notifier.darkTheme ? dark : light,
-                    home: Scaffold(body: SplashScreen())
+                    home: Scaffold(body: showOnboard?OnboardingScreen():SplashScreen())
                 ),
               );
             }));

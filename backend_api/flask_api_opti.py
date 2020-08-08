@@ -29,7 +29,7 @@ atexit.register(lambda: sched.shutdown())
 def process_news2():
     print("Scheduler2 is alive!") 
     background_job_process.scrap('https://www.indiatoday.in/technology/news','data/tech_new.json')
-    background_job_process.scrap_sports('https://www.indiatoday.in/sports','data/sports_new.json')
+    background_job_process.scrap_others('https://www.indiatoday.in/sports','data/sports_new.json')
     background_job_process.scrap('https://www.indiatoday.in/coronavirus-covid-19-outbreak','data/corona.json')
     background_job_process.scrap('https://www.indiatoday.in/world','data/world.json')
     background_job_process.scrap('https://www.indiatoday.in/education-today/news','data/education.json')

@@ -12,6 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Workmanager.initialize(callbackDispatcher, isInDebugMode: false);
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool showcaseVisibilityStatus = prefs.getBool("showShowcase")??true;
   var timings = prefs.getDouble("slider")??12;
   print("Slider value is $timings");
   var time = ((24/timings)*60).toInt();
@@ -29,7 +30,7 @@ Future<void> main() async {
 //      builder: (context) => MyApp(),
 //    ),
 //  );
-  runApp(MyApp());
+  runApp(MyApp(showOnboard: showcaseVisibilityStatus,));
 }
 
 void callbackDispatcher() {
