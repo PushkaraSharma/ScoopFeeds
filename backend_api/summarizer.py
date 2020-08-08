@@ -24,7 +24,7 @@ def summarizer_gen(input):
     
      tokenzid_text = tokenizer.encode(text,return_tensors="pt").to(device)
     
-     summary_ids = model.generate(tokenzid_text,num_beams=4,no_repeat_ngram_size=2,min_length=100,max_length=200,early_stopping=True)
+     summary_ids = model.generate(tokenzid_text,num_beams=4,no_repeat_ngram_size=2,min_length=60,max_length=120,early_stopping=True)
      output = tokenizer.decode(summary_ids[0],skip_special_tokens=True)
 
 

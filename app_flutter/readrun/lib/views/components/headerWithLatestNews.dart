@@ -95,7 +95,10 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                       fontFamily: 'CharterITC'),
                 ),
                 Spacer(),
-                Image.asset("assets/icons/inner_logo.png")
+                Image.asset(
+                  "assets/icons/inner_logo.png",
+                  height: 60,
+                )
               ],
             ),
           ),
@@ -112,17 +115,31 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
                       child: firstPicUrl == 'Notfound'
-                          ? Image.asset("assets/icons/logo_intro.png")
+                          ? Container(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              child: Image.asset(
+                                "assets/icons/logo_intro.png",
+                                fit: BoxFit.scaleDown,
+                              ))
                           : CachedNetworkImage(
                               height: 210,
                               width: double.infinity,
                               fit: BoxFit.fill,
                               imageUrl: firstPicUrl,
-                              placeholder: (context, url) => Image.asset(
-                                'assets/icons/logo_intro.png',
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                              placeholder: (context, url) => Container(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  child: Image.asset(
+                                    "assets/icons/logo_intro.png",
+                                    fit: BoxFit.scaleDown,
+                                  )),
+                              errorWidget: (context, url, error) => Container(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  child: Image.asset(
+                                    "assets/icons/logo_intro.png",
+                                    fit: BoxFit.scaleDown,
+                                  )),
                             ),
                     ),
                   ),
@@ -199,11 +216,12 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                             margin: EdgeInsets.symmetric(horizontal: 40),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).scaffoldBackgroundColor),
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
                             child: Center(
                                 child: Text(
                               "Read Now",
-                               style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyText2,
 //                              style: TextStyle(
 //                                  color: Theme.of(context).textTheme.bodyText1,
 //                                  fontFamily: 'KievitOT'),

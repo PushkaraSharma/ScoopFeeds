@@ -15,7 +15,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
   @override
   Widget build(BuildContext context) {
     // It will provie us total height  and width of our screen
@@ -34,12 +33,14 @@ class _BodyState extends State<Body> {
             mainAxisSpacing: 15.0,
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
             children: <Widget>[
-              myitems('Sports',
-                  'assets/images/undraw_track_and_field_33qn.png', "sports"),
-              myitems(
-                  'Technology',
-                  'assets/images/undraw_programmer_imem.png',
+              myitems('Corona', 'assets/images/undraw_medical_care_movn.png',
+                  "corona"),
+              myitems('Technology', 'assets/images/undraw_programmer_imem.png',
                   "tech"),
+              myitems('Sports', 'assets/images/undraw_track_and_field_33qn.png',
+                  "sports"),
+              myitems('Trending', 'assets/images/undraw_trends_a5mf.png',
+                  "trending"),
               myitems(
                 'Gaming',
                 'assets/images/undraw_gaming_6oy3.png',
@@ -48,32 +49,40 @@ class _BodyState extends State<Body> {
               myitems(
                 'Fashion',
                 'assets/images/undraw_fashion_photoshoot_mtq8.png',
-                "gaming",
+                "fashion",
+              ),
+              myitems(
+                'Education',
+                'assets/images/undraw_Graduation_ktn0.png',
+                "education",
               ),
               myitems(
                 'Automobile',
                 'assets/images/undraw_city_driver_jh2h.png',
-                "gaming",
+                "automobile",
               ),
               myitems(
                 'International',
                 'assets/images/undraw_around_the_world_v9nu.png',
-                "gaming",
+                "world",
               ),
               myitems(
-                'Lifestyle',
-                'assets/images/undraw_healthy_habit_bh5w.png',
-                "gaming",
+                'Business',
+                'assets/images/undraw_business_deal_cpi9.png',
+                "business",
               ),
             ],
             staggeredTiles: [
-              StaggeredTile.extent(1, size.height*0.194),
-              StaggeredTile.extent(1, size.height*0.194),
-              StaggeredTile.extent(1, size.height*0.194),
-              StaggeredTile.extent(1, size.height*0.194),
-              StaggeredTile.extent(1, size.height*0.194),
-              StaggeredTile.extent(1, size.height*0.194),
-              StaggeredTile.extent(1, size.height*0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.194),
             ],
           ),
         ),
@@ -88,7 +97,10 @@ class _BodyState extends State<Body> {
         shadowColor: Colors.black,
         borderRadius: BorderRadius.circular(20.0),
         child: Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0), border: Border.all(width: 1,color: Theme.of(context).primaryColor),),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(width: 1, color: Theme.of(context).primaryColor),
+          ),
           child: InkResponse(
             onTap: () {
               try {
@@ -128,24 +140,27 @@ class _BodyState extends State<Body> {
             containedInkWell: false,
             child: Center(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
-                child:Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: new Image(
-                      image: AssetImage(pic),
-                      fit: BoxFit.cover,
-                      height:90 ,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    child: AutoSizeText(heading,maxLines: 1, style: TextStyle(fontSize: 15.0,fontFamily: 'KievitOT')),
-                  )
-                ],
-              )),
+                  padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: new Image(
+                          image: AssetImage(pic),
+                          fit: BoxFit.cover,
+                          height: 90,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                        child: AutoSizeText(heading,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontSize: 15.0, fontFamily: 'KievitOT')),
+                      )
+                    ],
+                  )),
             ),
           ),
         ));

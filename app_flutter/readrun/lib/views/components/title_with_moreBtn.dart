@@ -3,17 +3,6 @@ import 'package:readrun/constants.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:wiredash/wiredash.dart';
 
-
-RateMyApp _rateMyApp = RateMyApp (
-    preferencesPrefix: 'rateMyApp_pro',
-    minDays: 3,
-    minLaunches: 7,
-    remindDays: 2,
-    remindLaunches: 5
-);
-
-
-
 class TitleWithMoreBtn extends StatefulWidget {
   const TitleWithMoreBtn({
     Key key,
@@ -31,7 +20,7 @@ class _TitleWithMoreBtnState extends State<TitleWithMoreBtn> {
 
   RateMyApp rateMyApp = RateMyApp(
     preferencesPrefix: 'rateMyApp_',
-    minDays: 2,
+    minDays: 1,
     minLaunches: 4,
     remindDays: 3,
     remindLaunches: 5,

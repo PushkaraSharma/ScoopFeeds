@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 ThemeData light = ThemeData(
+         accentColor: kSecondaryColor,
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
           toggleableActiveColor: kPrimaryColor ,
@@ -19,6 +20,7 @@ ThemeData light = ThemeData(
 );
 
 ThemeData dark = ThemeData(
+  accentColor: kPrimaryColor,
   brightness: Brightness.dark,
   scaffoldBackgroundColor: dBackgroundColor,
   primaryColor: dPrimaryColor,
@@ -72,7 +74,7 @@ class ThemeNotifier extends ChangeNotifier {
 
   _loadFromPrefs() async {
     await _initPrefs();
-    _darkTheme = _prefs.getBool('theme') ?? true;
+    _darkTheme = _prefs.getBool('theme') ?? false;
     _notification = _prefs.getBool('notification') ?? true;
     notifyListeners();
   }

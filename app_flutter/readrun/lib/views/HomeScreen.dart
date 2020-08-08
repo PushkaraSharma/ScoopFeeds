@@ -33,7 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: scaffoldKey,
-      appBar: buildAppBar(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0),
+        child: AppBar(
+          elevation: 0,
+          titleSpacing: 0.0,
+          leading: IconButton(
+            icon: SvgPicture.asset("assets/icons/menu.svg"),
+            onPressed: () {
+              scaffoldKey.currentState.openDrawer();
+            },
+          ),
+        ),
+      ),
       drawer: SingleChildScrollView(
           child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -254,13 +266,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-      elevation: 0,
-      leading: IconButton(
-        icon: SvgPicture.asset("assets/icons/menu.svg"),
-        onPressed: () {
-          scaffoldKey.currentState.openDrawer();
-        },
-      ),
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: SvgPicture.asset("assets/icons/menu.svg"),
+          onPressed: () {
+            scaffoldKey.currentState.openDrawer();
+          },
+        ),
     );
   }
 }
