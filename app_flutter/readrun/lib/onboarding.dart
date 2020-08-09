@@ -46,7 +46,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    _setOnBoardStatus();
     return Scaffold(
       backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -60,9 +59,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
-                    onPressed: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                        SplashScreen()),
-                            (Route<dynamic> route) => route is SplashScreen),
+                    onPressed: () {
+                      _setOnBoardStatus();
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                        SplashScreen()), (Route<dynamic> route) => route is SplashScreen);
+                        },
                     child: Text(
                       'Skip',
                       style: Theme.of(context).textTheme.headline2,
@@ -211,9 +212,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         width: double.infinity,
         color: kSecondaryColor,
         child: GestureDetector(
-          onTap: () =>Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                      SplashScreen()),
-                  (Route<dynamic> route) => route is SplashScreen),
+          onTap: (){
+      _setOnBoardStatus();
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+      SplashScreen()), (Route<dynamic> route) => route is SplashScreen);
+      },
           child: Center(
             child: Padding(
               padding: EdgeInsets.only(bottom: 20.0),

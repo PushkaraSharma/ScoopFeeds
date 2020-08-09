@@ -228,6 +228,7 @@ class _InformationState extends State<Information> {
                   padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
                   child: new AutoSizeText(
                     data.summary,
+                    maxLines: 10,
                     textAlign: TextAlign.justify,style: Theme.of(context).textTheme.bodyText1,
                   )),
               Spacer(),
