@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:readrun/Widgets/notification_plugin.dart';
 
-
 const simplePeriodicTask = "simplePeriodicTask";
 
 Future<void> main() async {
@@ -24,12 +23,6 @@ Future<void> main() async {
       constraints: Constraints(
         networkType: NetworkType.connected,
       ));
-//  runApp(
-//    DevicePreview(
-//      enabled: !kReleaseMode,
-//      builder: (context) => MyApp(),
-//    ),
-//  );
   runApp(MyApp(showOnboard: showcaseVisibilityStatus,));
 }
 

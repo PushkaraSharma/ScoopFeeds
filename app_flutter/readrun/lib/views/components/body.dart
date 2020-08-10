@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:readrun/constants.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';
 import 'package:readrun/views/HomeScreen.dart';
@@ -31,7 +32,7 @@ class _BodyState extends State<Body> {
             crossAxisCount: 3,
             crossAxisSpacing: 15.0,
             mainAxisSpacing: 15.0,
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+            padding: EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 20),
             children: <Widget>[
               myitems('Corona', 'assets/images/undraw_medical_care_movn.png',
                   "corona"),
@@ -73,16 +74,16 @@ class _BodyState extends State<Body> {
               ),
             ],
             staggeredTiles: [
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
-              StaggeredTile.extent(1, size.height * 0.194),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
+              StaggeredTile.extent(1, size.height * 0.17),
             ],
           ),
         ),
@@ -91,6 +92,7 @@ class _BodyState extends State<Body> {
   }
 
   Material myitems(String heading, String pic, String topic) {
+    Size size = MediaQuery.of(context).size;
     return Material(
 //        color: Colors.white,
         elevation: 4.0,
@@ -99,7 +101,7 @@ class _BodyState extends State<Body> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
-            border: Border.all(width: 1, color: Theme.of(context).primaryColor),
+            border: Border.all(width: 1, color: kPrimaryColor),
           ),
           child: InkResponse(
             onTap: () {
@@ -136,20 +138,20 @@ class _BodyState extends State<Body> {
                 );
               }
             },
-            radius: 10.0,
-            containedInkWell: false,
+            //radius: 10.0,
+            containedInkWell: true,
             child: Center(
               child: Padding(
-                  padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
                         child: new Image(
                           image: AssetImage(pic),
                           fit: BoxFit.cover,
-                          height: 90,
+                          height: size.height*0.12,
                         ),
                       ),
                       Padding(

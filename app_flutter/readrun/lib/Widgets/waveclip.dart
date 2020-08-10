@@ -7,15 +7,15 @@ class WaveClipper extends CustomClipper<Path> {
 
       var path = new Path();
 
-      path.lineTo(0.0, size.height - 40);
+      path.lineTo(0.0, size.height - 30);
 
       path.quadraticBezierTo(
 
-          size.width / 4, size.height - 80, size.width / 2, size.height - 40);
+          size.width / 4, size.height - 60, size.width / 2, size.height - 30);
 
       path.quadraticBezierTo(size.width - (size.width / 4), size.height,
 
-          size.width, size.height - 40);
+          size.width, size.height - 30);
 
       path.lineTo(size.width, 0.0);
 

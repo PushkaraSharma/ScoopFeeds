@@ -74,12 +74,11 @@ class _InformationState extends State<Information> {
   }
 
   void _changed() {
-    if(show_temp_images) {
+    if (show_temp_images) {
       setState(() {
         show_temp_images = !show_temp_images;
       });
-    }
-    else{
+    } else {
       Future.delayed(const Duration(milliseconds: 200), () {
         setState(() {
           show_temp_images = !show_temp_images;
@@ -87,7 +86,6 @@ class _InformationState extends State<Information> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -121,118 +119,125 @@ class _InformationState extends State<Information> {
 
   // Builder Functions
   _buildStoryPage(News data, bool active) {
-
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     print(height);
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 1000),
-      curve: Curves.easeInCirc,
-      //margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Stack(children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            _changed();
-            showModalBottomSheet<void>(
-                context: context,
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25))),
-                builder: (BuildContext context) {
-                  return Container(
-                    height: 100,
-                    padding: EdgeInsets.only(top: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () {
-                                print('Share');
-                                _takeScreenshotandShare();
-                              },
-                              icon: Icon(
-                                Icons.share,
-                                color: kSecondaryColor,
-                                size: 30,
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+            (Route<dynamic> route) => route is HomeScreen);
+      },
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.easeInCirc,
+        //margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Stack(children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              _changed();
+              showModalBottomSheet<void>(
+                  context: context,
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(25),
+                          topLeft: Radius.circular(25))),
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: 100,
+                      padding: EdgeInsets.only(top: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              IconButton(
+                                onPressed: () {
+                                  print('Share');
+                                  _takeScreenshotandShare();
+                                },
+                                icon: Icon(
+                                  Icons.share,
+                                  color: kSecondaryColor,
+                                  size: 30,
+                                ),
                               ),
-                            ),
-                            AutoSizeText('Share',
-                                style: TextStyle(
-                                    fontFamily: 'KievitOT',
-                                    fontWeight: FontWeight.w300))
-                          ],
-                        ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () {
-                                print('Refresh');
-                                Navigator.pop(context);
-                                onRefresh(1);
-                              },
-                              icon: Icon(
-                                Icons.refresh,
-                                color: kSecondaryColor,
-                                size: 30,
+                              AutoSizeText('Share',
+                                  style: TextStyle(
+                                      fontFamily: 'KievitOT',
+                                      fontWeight: FontWeight.w300))
+                            ],
+                          ),
+                          SizedBox(
+                            width: 50,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              IconButton(
+                                onPressed: () {
+                                  print('Refresh');
+                                  Navigator.pop(context);
+                                  onRefresh(1);
+                                },
+                                icon: Icon(
+                                  Icons.refresh,
+                                  color: kSecondaryColor,
+                                  size: 30,
+                                ),
                               ),
-                            ),
-                            AutoSizeText('Refresh',
-                                style: TextStyle(
-                                    fontFamily: 'KievitOT',
-                                    fontWeight: FontWeight.w300))
-                          ],
+                              AutoSizeText('Refresh',
+                                  style: TextStyle(
+                                      fontFamily: 'KievitOT',
+                                      fontWeight: FontWeight.w300))
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }).whenComplete(() => _changed());
+            },
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: height * 0.45,
+                  width: width,
+                  child: ClipPath(
+                    clipper: ClippingClass(),
+                    child: Container(
+                      child: CachedNetworkImage(
+                        fit: BoxFit.fill,
+                        imageUrl: data.picUrl,
+                        placeholder: (context, url) => Image.asset(
+                          'assets/images/new_image_placeholder.png',
+                          fit: BoxFit.fill,
                         ),
-                      ],
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
                     ),
-                  );
-                }).whenComplete(() => _changed());
-          },
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: height * 0.45,
-                width: width,
-                child: ClipPath(
-                  clipper: ClippingClass(),
-                  child: Container(
-                  child: CachedNetworkImage(
-                    fit: BoxFit.fill,
-                    imageUrl: data.picUrl,
-                    placeholder: (context, url) => Image.asset(
-                      'assets/images/new_image_placeholder.png',
-                      fit: BoxFit.fill,
-                    ),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error),
-                  ),
                   ),
                 ),
-              ),
-              new Padding(
-                padding: new EdgeInsets.fromLTRB(12.0, 18.0, 12.0, 10.0),
-                child: new AutoSizeText(
-                  data.heading,maxLines: 3,
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-              ),
-              new Padding(
-                  padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
+                new Padding(
+                  padding: new EdgeInsets.fromLTRB(12.0, 18.0, 12.0, 10.0),
                   child: new AutoSizeText(
-                    data.summary,
-                    maxLines: 10,
-                    textAlign: TextAlign.justify,style: Theme.of(context).textTheme.bodyText1,
-                  )),
-              Spacer(),
-              Visibility(
+                    data.heading,
+                    maxLines: 3,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                ),
+                new Padding(
+                    padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
+                    child: new AutoSizeText(
+                      data.summary,
+                      maxLines: 10,
+                      textAlign: TextAlign.justify,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    )),
+                Spacer(),
+                Visibility(
                   visible: show_temp_images,
                   child: Container(
                       width: width,
@@ -243,19 +248,22 @@ class _InformationState extends State<Information> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Image.asset('assets/icons/google_play.png',),
+                            Image.asset(
+                              'assets/icons/google_play.png',
+                            ),
                             Container(
-                              child: Image.asset(
-                                  'assets/icons/screenShot2.png'),
+                              child:
+                                  Image.asset('assets/icons/screenShot2.png'),
                             )
                           ],
                         ),
                       )),
-                  ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 
@@ -268,12 +276,15 @@ class _InformationState extends State<Information> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              child: Image.asset("assets/images/no_more.png",height:height*0.3 ,),
+              child: Image.asset(
+                "assets/images/no_more.png",
+                height: height * 0.3,
+              ),
             ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             Text(
               "You have read all Stories",
-             style: Theme.of(context).textTheme.bodyText2 ,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             Container(

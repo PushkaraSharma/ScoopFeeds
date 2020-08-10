@@ -12,13 +12,14 @@ import '../Widgets/waveclip.dart';
 import '../model/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   var scaffoldKey = GlobalKey<ScaffoldState>();
   double Slidervalue = 12;
 
@@ -72,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color(0xffeee7eb),
                     child: AutoSizeText(
                       'Read all new feeds in short',
+                      maxLines: 1,
                       style: TextStyle(
                           fontFamily: 'KievitOT',
                           fontSize: 16,
@@ -98,8 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? kSecondaryColor
                                 : kPrimaryColor,
                           ),
-                    title: Text(
+                    title: AutoSizeText(
                       "Notifications",
+                      maxLines: 1,
                       style: TextStyle(fontFamily: 'KievitOT'),
                     ),
                     trailing: Switch(
@@ -113,8 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   notifier.notification
                       ? Column(
                           children: <Widget>[
-                            Text(
+                            AutoSizeText(
                               'Number of Daily Notifications',
+                              maxLines: 1,
                               style: TextStyle(fontSize: 10),
                             ),
                             Slider(
@@ -155,8 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.wb_sunny,
                           color: kPrimaryColor,
                         ),
-                  title: Text(
+                  title: AutoSizeText(
                     "Dark Mode",
+                    maxLines: 1,
                     style: TextStyle(fontFamily: 'KievitOT'),
                   ),
                   trailing: Consumer<ThemeNotifier>(
@@ -172,9 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 1,
                   color: Colors.grey,
                 ),
-                SizedBox(
-                  height: 35,
-                ),
+//                SizedBox(
+//                  height: 35,
+//                ),
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -182,25 +187,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         notifier.darkTheme ? Colors.black54 : Colors.grey[200],
                     child: Column(
                       children: <Widget>[
+                        SizedBox(
+                          height: 40,
+                        ),
                         ListTile(
                           onTap: () async {
                             debugPrint("Share this app");
-                            await Share.text("Share app","Check out Scoop Feeds app. This is the best AI powered news reading app I found https://ssjbdiusb.com",'text/plain' );
+                            await Share.text(
+                                "Share app",
+                                "Check out Scoop Feeds app. This is the best AI powered news reading app I found https://ssjbdiusb.com",
+                                'text/plain');
                           },
-                          title: Text("Share this app",
+                          title: AutoSizeText("Share this app",
+                              maxLines: 1,
                               style: TextStyle(fontFamily: 'KievitOT')),
                         ),
                         SizedBox(
                           height: 2,
                         ),
-  //rate will appear it self
-//                        ListTile(
-//                          onTap: () {
-//                            debugPrint("Tapped Notifications");
-//                          },
-//                          title: Text("Rate this app",
-//                              style: TextStyle(fontFamily: 'KievitOT')),
-//                        ),
+                        //rate will appear it self
                         SizedBox(
                           height: 2,
                         ),
@@ -214,7 +219,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mdFileName: 'privacy_policy.md');
                                 });
                           },
-                          title: Text("Privacy",
+                          title: AutoSizeText("Privacy Policy",
+                              maxLines: 1,
                               style: TextStyle(fontFamily: 'KievitOT')),
                         ),
                         ListTile(
@@ -238,7 +244,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             debugPrint("Tapped Feedback");
                             Wiredash.of(context).show();
                           },
-                          title: Text("Feedback",
+                          title: AutoSizeText("Feedback",
+                              maxLines: 1,
                               style: TextStyle(fontFamily: 'KievitOT')),
                         ),
                         SizedBox(
@@ -266,14 +273,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset("assets/icons/menu.svg"),
-          onPressed: () {
-            scaffoldKey.currentState.openDrawer();
-          },
-        ),
+      backgroundColor: Colors.black,
+      elevation: 0,
+      leading: IconButton(
+        icon: SvgPicture.asset("assets/icons/menu.svg"),
+        onPressed: () {
+          scaffoldKey.currentState.openDrawer();
+        },
+      ),
     );
   }
 }
