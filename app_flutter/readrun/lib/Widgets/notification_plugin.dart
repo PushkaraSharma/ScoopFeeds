@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' show File, InternetAddress, Platform, SocketException;
 import 'package:http/http.dart' as http;
-import 'package:readrun/constants.dart';
+import 'package:readrun/model/constants.dart';
 import 'package:rxdart/subjects.dart';
 import '../model/News.dart';
 import '../secrets.dart';

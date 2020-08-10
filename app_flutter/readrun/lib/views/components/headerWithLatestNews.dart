@@ -7,7 +7,7 @@ import 'package:readrun/model/News.dart';
 import 'package:readrun/views/information.dart';
 import 'package:readrun/views/no_internet.dart';
 import 'package:readrun/views/HomeScreen.dart';
-import 'package:readrun/constants.dart';
+import 'package:readrun/model/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../secrets.dart';

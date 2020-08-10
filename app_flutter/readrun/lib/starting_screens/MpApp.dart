@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wiredash/wiredash.dart';
 
 import 'Splash_screen.dart';
-import 'model/theme.dart';
-import 'main.dart';
+import '../model/theme.dart';
+import '../main.dart';
 import 'onboarding.dart';
 
 

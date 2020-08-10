@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:readrun/constants.dart';
+import 'package:readrun/model/constants.dart';
 import 'HomeScreen.dart';
 
 class Server_Down extends StatefulWidget {

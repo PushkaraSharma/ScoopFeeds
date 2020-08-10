@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
+import 'constants.dart';
 
 ThemeData light = ThemeData(
          accentColor: kSecondaryColor,

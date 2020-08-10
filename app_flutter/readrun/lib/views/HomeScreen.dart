@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:readrun/Widgets/policies_dialog.dart';
 import 'package:readrun/views/components/body.dart';
-import 'package:readrun/constants.dart';
+import 'package:readrun/model/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wiredash/wiredash.dart';
 import '../Widgets/waveclip.dart';

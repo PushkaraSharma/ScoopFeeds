@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:readrun/Splash_screen.dart';
-import 'package:readrun/constants.dart';
+import 'package:readrun/starting_screens/Splash_screen.dart';
+import 'package:readrun/model/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

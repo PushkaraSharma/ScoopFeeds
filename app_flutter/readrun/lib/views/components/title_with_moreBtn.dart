@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:readrun/constants.dart';
+import 'package:readrun/model/constants.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:wiredash/wiredash.dart';
 
