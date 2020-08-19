@@ -181,21 +181,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           curve: Curves.ease,
                         );
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Next',
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                          SizedBox(width: 10.0),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: kPrimaryColor,
-                            size: 30.0,
-                          ),
-                        ],
+                      child: Container(
+                        height: height*0.05,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Next',
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                            SizedBox(width: 10.0),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: kPrimaryColor,
+                              size: 25.0,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -207,35 +210,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
       bottomSheet: _currentPage == _numPages - 1
-          ? Container(
+          ? GestureDetector(
+        onTap: (){
+          _setOnBoardStatus();
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+              SplashScreen()), (Route<dynamic> route) => route is SplashScreen);
+        },
+            child: Container(
         height: height*0.1,
         width: double.infinity,
         color: kSecondaryColor,
-        child: GestureDetector(
-          onTap: (){
-      _setOnBoardStatus();
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-      SplashScreen()), (Route<dynamic> route) => route is SplashScreen);
-      },
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 20.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Get started',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontFamily: "CharterITC",
-                    fontWeight: FontWeight.bold,
-                  ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Get started',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontFamily: "CharterITC",
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
         ),
-      )
+      ),
+          )
           : SizedBox(height: 0,),
     );
   }

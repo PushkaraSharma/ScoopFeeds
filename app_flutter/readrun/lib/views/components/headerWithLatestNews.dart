@@ -111,7 +111,7 @@ class _HeaderWithLatestNewsState extends State<HeaderWithLatestNews> {
                 child: Stack(children: <Widget>[
                   Container(
                     width: double.infinity,
-                    height: 200,
+                    height: size.height*0.26,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
                       child: firstPicUrl == 'Notfound'

@@ -136,6 +136,7 @@ class _InformationState extends State<Information> {
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Stack(children: <Widget>[
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
               _changed();
               showModalBottomSheet<void>(
@@ -341,7 +342,7 @@ class _InformationState extends State<Information> {
           'Scoop Feeds Shared News', 'screenshot.png', pngBytes, 'image/png',
           text:
               'Read AI powered crisp and short summaries of latest news on Scoop Feeds.'
-              ' Download Now!!');
+              ' Download Now!! https://play.google.com/store/apps/details?id=com.noobtech.scoopfeeds');
     }).catchError((onError) {
       print(onError);
     });

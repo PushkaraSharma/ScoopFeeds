@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             debugPrint("Share this app");
                             await Share.text(
                                 "Share app",
-                                "Check out Scoop Feeds app. This is the best AI powered news reading app I found https://ssjbdiusb.com",
+                                "Check out Scoop Feeds app. This is the best AI powered news reading app I found https://play.google.com/store/apps/details?id=com.noobtech.scoopfeeds",
                                 'text/plain');
                           },
                           title: AutoSizeText("Share this app",

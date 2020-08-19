@@ -24,8 +24,8 @@ class _TitleWithMoreBtnState extends State<TitleWithMoreBtn> {
     minLaunches: 4,
     remindDays: 3,
     remindLaunches: 5,
-    googlePlayIdentifier: 'fr.skyost.example',
-    appStoreIdentifier: '1491556149',
+    googlePlayIdentifier: 'com.noobtech.scoopfeeds',
+    //appStoreIdentifier: '1491556149',
   );
 
   @override
