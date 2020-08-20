@@ -272,7 +272,7 @@ class _InformationState extends State<Information> {
                           imageUrl: data.picUrl,
                           placeholder: (context, url) => Image.asset(
                             'assets/images/new_image_placeholder.png',
-                            fit: BoxFit.fill,
+                            fit: BoxFit.none,
                           ),
                           errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
