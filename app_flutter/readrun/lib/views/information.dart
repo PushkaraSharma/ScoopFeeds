@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -12,8 +13,10 @@ import 'package:readrun/model/News.dart';
 import 'package:readrun/Widgets/Fetching_news_widget.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../secrets.dart';
 import 'HomeScreen.dart';
+
 
 class Information extends StatefulWidget {
   final String topic;
@@ -37,7 +40,9 @@ class _InformationState extends State<Information> {
   List<News> list = List();
   var isLoading = false;
   var show_temp_images = false;
-
+  var guideUserVisible1 = false;
+  var guideUserVisible2 = false;
+  var guideUserVisible3 = false;
   _fetchData() async {
     setState(() {
       isLoading = true;
@@ -71,6 +76,55 @@ class _InformationState extends State<Information> {
         });
       }
     });
+  }
+
+  void guideUser(int currentIdx) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool guideUserVisi = prefs.getBool("guideUserVisible");
+    print("Visis : $guideUserVisi");
+    print(currentIdx);
+    if (guideUserVisi == null && currentIdx == 0) {
+      setState(() {
+        Future.delayed(const Duration(seconds: 3), () {
+          guideUserVisible1 = true;
+        });
+      });
+    }
+    else if (guideUserVisi == null && currentIdx == 1) {
+      setState(() {
+        Future.delayed(const Duration(seconds: 3), () {
+          guideUserVisible2 = true;
+          guideUserVisible1 = false;
+        });
+
+      });
+    }
+    else if (guideUserVisi == null && currentIdx == 2) {
+      setState(() {
+        Future.delayed(const Duration(seconds: 2), () {
+          guideUserVisible3 = true;
+          guideUserVisible2 = false;
+        });
+      });
+      Future.delayed(const Duration(seconds: 6), () {
+        setState(() {
+          //guideUserVisible3 = false;
+          prefs.setBool("guideUserVisible", false);
+        });
+
+      });
+    }
+    else {
+      setState(() {
+        guideUserVisible1 = false;
+        guideUserVisible2 = false;
+        guideUserVisible3 = false;
+        prefs.setBool("guideUserVisible", false);
+
+
+      });
+
+    }
   }
 
   void _changed() {
@@ -109,7 +163,9 @@ class _InformationState extends State<Information> {
                     } else if (list.length >= currentIdx) {
                       // Active page
                       bool active = currentIdx == currentPage;
-                      return _buildStoryPage(list[currentIdx], active);
+                      guideUser(currentIdx);
+                      return _buildStoryPage(
+                          list[currentIdx], active, currentIdx);
                     }
                   }),
               HomeScreen()
@@ -118,10 +174,11 @@ class _InformationState extends State<Information> {
   }
 
   // Builder Functions
-  _buildStoryPage(News data, bool active) {
+  _buildStoryPage(News data, bool active, int currentIdx) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     print(height);
+
     return WillPopScope(
       onWillPop: () {
         Navigator.pushAndRemoveUntil(
@@ -132,12 +189,12 @@ class _InformationState extends State<Information> {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1000),
         curve: Curves.easeInCirc,
-        //margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Stack(children: <Widget>[
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
+              print("TAP");
               _changed();
               showModalBottomSheet<void>(
                   context: context,
@@ -200,69 +257,133 @@ class _InformationState extends State<Information> {
                     );
                   }).whenComplete(() => _changed());
             },
-            child: Column(
+            child: Stack(
               children: <Widget>[
-                Container(
-                  height: height * 0.45,
-                  width: width,
-                  child: ClipPath(
-                    clipper: ClippingClass(),
-                    child: Container(
-                      child: CachedNetworkImage(
-                        fit: BoxFit.fill,
-                        imageUrl: data.picUrl,
-                        placeholder: (context, url) => Image.asset(
-                          'assets/images/new_image_placeholder.png',
+               Column(
+                children: <Widget>[
+                  Container(
+                    height: height * 0.45,
+                    width: width,
+                    child: ClipPath(
+                      clipper: ClippingClass(),
+                      child: Container(
+                        child: CachedNetworkImage(
                           fit: BoxFit.fill,
+                          imageUrl: data.picUrl,
+                          placeholder: (context, url) => Image.asset(
+                            'assets/images/new_image_placeholder.png',
+                            fit: BoxFit.fill,
+                          ),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                     ),
                   ),
-                ),
-                new Padding(
-                  padding: new EdgeInsets.fromLTRB(12.0, 18.0, 12.0, 10.0),
-                  child: new AutoSizeText(
-                    data.heading,
-                    maxLines: 3,
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
-                new Padding(
-                    padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
+                  new Padding(
+                    padding: new EdgeInsets.fromLTRB(12.0, 18.0, 12.0, 10.0),
                     child: new AutoSizeText(
-                      data.summary,
-                      maxLines: 10,
-                      textAlign: TextAlign.justify,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    )),
-                Spacer(),
-                Visibility(
-                  visible: show_temp_images,
-                  child: Container(
-                      width: width,
-                      height: height * 0.12,
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/icons/google_play.png',
-                            ),
-                            Container(
-                              child:
-                                  Image.asset('assets/icons/screenShot2.png'),
-                            )
-                          ],
-                        ),
+                      data.heading,
+                      maxLines: 3,
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                  ),
+                  new Padding(
+                      padding: new EdgeInsets.fromLTRB(18, 18, 18, 5),
+                      child: new AutoSizeText(
+                        data.summary.replaceAll("?", ""),
+                        maxLines: 10,
+                        textAlign: TextAlign.justify,
+                        style: Theme.of(context).textTheme.bodyText1,
                       )),
+                  Spacer(),
+                  Visibility(
+                    visible: show_temp_images,
+                    child: Container(
+                        width: width,
+                        height: height * 0.12,
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Align(
+                          alignment: FractionalOffset.bottomCenter,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/icons/google_play.png',
+                              ),
+                              Container(
+                                child:
+                                    Image.asset('assets/icons/screenShot2.png'),
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
+                ],
+              ),
+                currentIdx == 0
+                    ? Visibility(
+                    visible: guideUserVisible1,
+                    child: Container(
+                        height: height,
+                        color: Colors.black.withOpacity(0.7),
+                        child: Center(
+                          child: Column(children: <Widget>[
+                            Image.asset("assets/images/Swipe-Up.png",height: height*0.39,),
+                            Text("Swipe Up for more News",
+                                style: TextStyle(
+                                    color: Colors.white,decoration: TextDecoration.none,
+                                    fontSize: 25,
+                                    fontFamily: "CharterITC")),
+                          ]),
+                        )))
+                    : SizedBox(
+                  height: 0,
                 ),
-              ],
+                currentIdx == 1
+                    ? Visibility(
+                    visible: guideUserVisible2,
+                    child: Container(
+                        height: height,
+                        color: Colors.black.withOpacity(0.7),
+                        child: Center(
+                          child: Column(children: <Widget>[
+                            Image.asset("assets/images/On_tap.png",height: height*0.39,),
+                            Text("Tap for more options",
+                                style: TextStyle(
+                                    color: Colors.white,decoration: TextDecoration.none,
+                                    fontSize: 25,
+                                    fontFamily: "CharterITC")),
+                          ]),
+                        )))
+                    : SizedBox(
+                  height: 0,
+                ),
+                currentIdx == 2
+                    ? Visibility(
+                    visible: guideUserVisible3,
+                    child: Container(
+                        height: height,
+                        color: Colors.black.withOpacity(0.7),
+                        child: Center(
+                          child: Column(children: <Widget>[
+                            Image.asset("assets/images/Swipe_right.png",height: height*0.39,),
+                            Text("Swipe Right for Main Menu",
+                                style: TextStyle(
+                                    color: Colors.white,decoration: TextDecoration.none,
+                                    fontSize: 25,
+                                    fontFamily: "CharterITC")),
+                          ]),
+                        )))
+                    : SizedBox(
+                  height: 0,
+                )
+
+
+              ]
             ),
           ),
+
         ]),
       ),
     );

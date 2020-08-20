@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "311839132524",
+    "firebase_url": "https://scoopfeeds-9ad20.firebaseio.com",
+    "project_id": "scoopfeeds-9ad20",
+    "storage_bucket": "scoopfeeds-9ad20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311839132524:android:13613c007e07987c0a8149",
+        "android_client_info": {
+          "package_name": "com.noobtech.scoopfeeds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311839132524-pscp7o1m56savstfum7rtn14vhftpvne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4edABBJru_nK4fI4wFnZruOAuqWQ1KbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311839132524-pscp7o1m56savstfum7rtn14vhftpvne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
