@@ -58,7 +58,7 @@ def scrap(url_,file_name):
                 if(head==first):
                     print("\n+++++EQUAL+++++++++++++++++\n")
                     break
-                pic_link = new_page.find('img', itemprop='contentUrl')
+                pic_link = new_page.find('img', class_= "lazyload")
                 pics = pic_link['data-src']   
                 if(pics is None):
                     continue
@@ -129,7 +129,7 @@ def scrap_others(url_,file_name):
                     print("\n+++++EQUAL+++++++++++++++++\n")
                     break
                 try:
-                    pic_link = new_page.find('img', itemprop='contentUrl')
+                    pic_link = new_page.find('img', class_= "lazyload")
                     pics = pic_link['data-src']  
                 except:
                     c+=1
