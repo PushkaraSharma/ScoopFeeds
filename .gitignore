@@ -1,2 +1,6 @@
 #Ignore env
 scoopfeeds/
+
+#Ignore python cache files
+*.pyc
+*.pyo
