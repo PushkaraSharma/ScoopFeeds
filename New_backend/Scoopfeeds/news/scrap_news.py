@@ -1,5 +1,4 @@
 import urllib.request as url
-import pandas as pd
 import bs4
 from news.variables import NEWS_HOME_PAGE_URL, NEWS_URL
 from news.models import News
