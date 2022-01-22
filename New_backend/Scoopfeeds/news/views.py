@@ -1,10 +1,11 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from news.pagination import PaginationHandlerMixin
 from news.models import News
 from news.serializers import NewsSerializer
 from rest_framework.pagination import PageNumberPagination
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from news.services import valid_news_type, start_sceduler_jobs
 
@@ -18,6 +19,8 @@ class BasicPagination(PageNumberPagination):
 class NewsSearch(APIView, PaginationHandlerMixin):
     pagination_class = BasicPagination
     serializer_class = NewsSerializer
+    authenticated_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         news_type = request.GET.get('type').lower()
