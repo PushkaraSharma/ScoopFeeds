@@ -12,7 +12,7 @@ TECHNOLOGY ='technology'
 NEWS_HOME_PAGE_URL = "https://www.indiatoday.in"
 NEWS_URL = {
     LATEST: "https://www.indiatoday.in/top-stories",
-    SPORTS: "https://www.indiatoday.in/sports",
+    # SPORTS: "https://www.indiatoday.in/sports",
     CORONA: "https://www.indiatoday.in/coronavirus-covid-19-outbreak",
     WORLD: "https://www.indiatoday.in/world",
     EDUCATION: "https://www.indiatoday.in/education-today/news",
@@ -35,7 +35,8 @@ BATCH_2_NEWS_LIST = [SPORTS, TECHNOLOGY, CORONA, WORLD, EDUCATION]
 BATCH_3_NEWS_LIST = [BUSINESS, FASHION, AUTOMOBILE, TRENDING]
 
 BATCH_REHIT_TIME = {
-    'batch_1': 1,
-    'batch_2': 2,
-    'batch_3': 3
+    'batch_1': 4,
+    'batch_2': 20,
+    'batch_3': 45
 }
+DATA_DELETE_TIME = 3

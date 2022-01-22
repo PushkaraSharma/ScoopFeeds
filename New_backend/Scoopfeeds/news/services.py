@@ -1,17 +1,19 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
 import logging
+from news.models import News
 from news.exceptions import WrongQueryParamsExeption
 from news.scrap_news import scrap_news
-from news.variables import BATCH_REHIT_TIME, BATCH_TO_NEWS_MAPPING, NEWS_URL
+from news.variables import BATCH_REHIT_TIME, BATCH_TO_NEWS_MAPPING, DATA_DELETE_TIME, NEWS_URL
 
 logger = logging.getLogger(__name__)
 
 
-def start_sceduler_jobs():
+def start_scheduler_jobs():
     sched = BackgroundScheduler(daemon=True)
     for job in list(BATCH_REHIT_TIME.keys()):
-        create_scheduler_job(sched, job)
+        create_scraping_scheduler_job(sched, job)
+    create_data_deletion_job(sched)
     sched.start()
     atexit.register(lambda: sched.shutdown())
 
@@ -29,8 +31,20 @@ def process_news(batch):
         scrap_news(news_type)
 
 
-def create_scheduler_job(schedular, batch):
+def create_scraping_scheduler_job(schedular, batch):
     schedular.add_job(process_news, 'interval', args=[batch], minutes=BATCH_REHIT_TIME[batch])
+
+
+def create_data_deletion_job(schedular):
+    schedular.add_job(delete_data, 'interval', days=DATA_DELETE_TIME)
+
+
+def delete_data():
+    for type in list(NEWS_URL.keys()):
+        to_delete_objects = News.objects.filter(news_type=type).order_by("-id")[2000:]
+        print(f'Number of News of type {type} to be deleted: {len(to_delete_objects)}')
+        for object in to_delete_objects:
+            object.delete()
 
 
 
