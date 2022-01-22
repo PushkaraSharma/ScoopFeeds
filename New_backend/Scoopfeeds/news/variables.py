@@ -35,7 +35,7 @@ BATCH_2_NEWS_LIST = [SPORTS, TECHNOLOGY, CORONA, WORLD, EDUCATION]
 BATCH_3_NEWS_LIST = [BUSINESS, GAMING, FASHION, AUTOMOBILE, TRENDING]
 
 BATCH_REHIT_TIME = {
-    'batch_1': 4,
-    'batch_2': 20,
-    'batch_3': 45
+    'batch_1': 1,
+    'batch_2': 3,
+    'batch_3': 4
 }
