@@ -24,6 +24,7 @@ def valid_news_type(type):
 
 def process_news(batch):
     logger.info(f'Scheduler is alive for {batch} !!!')
+    print(f'Scheduler is alive for {batch} !!!')
     for news_type in BATCH_TO_NEWS_MAPPING[batch]:
         scrap_news(news_type)
 

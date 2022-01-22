@@ -1,28 +1,33 @@
+from urllib.error import URLError
 import urllib.request as url
 import bs4
 from news.variables import NEWS_HOME_PAGE_URL, NEWS_URL
 from news.models import News
+
 
 def get_first_record_heading(news_type):
     try:
         return News.objects.filter(news_type=news_type).first().heading
     except AttributeError:
         return ''
-        
+
 
 def get_context_of_page(url_name):
-    web = url.urlopen(url_name)
-    page = bs4.BeautifulSoup(web, 'lxml')
-    return page
+    try:
+        web = url.urlopen(url_name)
+        return bs4.BeautifulSoup(web, 'lxml')
+    except URLError:
+        print('Problem with Url parsing')
 
 
 def extract_links_for_news(news_type, tag, class_name):
     home_page = get_context_of_page(NEWS_URL[news_type])
-    b = home_page.find(tag, class_=class_name)
-    temp_hrefs = []
-    for anchor_tag in b.find_all('a', href=True):
-        temp_hrefs.append(anchor_tag['href'])
-    return temp_hrefs
+    if home_page:
+        b = home_page.find(tag, class_=class_name)
+        temp_hrefs = []
+        for anchor_tag in b.find_all('a', href=True):
+            temp_hrefs.append(anchor_tag['href'])
+        return temp_hrefs
 
 
 def get_image_link_from_page(page):
@@ -51,28 +56,32 @@ def create_context_for_news_model(headline_text, summary, img_url, news_type):
 def scrap_news(news_type):
     heading_first = get_first_record_heading(news_type)
     hrefs = extract_links_for_news(news_type, 'div', 'view-content')
-    print("TOTAL NEWS:", len(hrefs))
-    for index in range(len(hrefs)):
-        news_page = get_context_of_page(NEWS_HOME_PAGE_URL+hrefs[index])
-        headline = news_page.find('h1', itemprop='headline')
-        if not headline:
-            continue
-        headline_text = headline.text
-        if headline_text == heading_first:
-            break
-        img_url = get_image_link_from_page(news_page)
-        if not img_url:
-            continue
-        news_details = news_page.find('div', itemprop='articleBody')
-        if not news_details:
-            continue
-        news_details_text = news_details.text
-        news_details_text = check_news_details_condition(news_details.text)
-        #summary_gen = summarizer.summarizer_gen(news_details_text)
-        summary = news_details_text
-        context = create_context_for_news_model(
-            headline_text, summary, img_url, news_type)
-        News.objects.create(**context)
+    if hrefs:
+        print(f"TOTAL NEWS {news_type}:", len(hrefs))
+        for index in range(len(hrefs)):
+            news_page = get_context_of_page(NEWS_HOME_PAGE_URL+hrefs[index])
+            if not news_page:
+                continue
+            headline = news_page.find('h1', itemprop='headline')
+            if not headline:
+                continue
+            headline_text = headline.text
+            if headline_text == heading_first:
+                break
+            img_url = get_image_link_from_page(news_page)
+            if not img_url:
+                continue
+            news_details = news_page.find('div', itemprop='articleBody')
+            if not news_details:
+                continue
+            news_details_text = news_details.text
+            news_details_text = check_news_details_condition(news_details.text)
+            #summary_gen = summarizer.summarizer_gen(news_details_text)
+            summary = news_details_text
+            context = create_context_for_news_model(
+                headline_text, summary, img_url, news_type)
+            print(f'Adding {headline_text}')
+            News.objects.create(**context)
 
 
 # def scrap_others(url_,file_name):

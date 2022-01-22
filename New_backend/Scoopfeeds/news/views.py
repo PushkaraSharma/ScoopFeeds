@@ -8,7 +8,7 @@ from rest_framework.pagination import PageNumberPagination
 
 from news.services import valid_news_type, start_sceduler_jobs
 
-# start_sceduler_jobs()
+start_sceduler_jobs()
 
 
 class BasicPagination(PageNumberPagination):
