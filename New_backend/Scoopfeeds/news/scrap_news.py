@@ -1,6 +1,7 @@
 from urllib.error import URLError
 import urllib.request as url
 import bs4
+from news.summary_generator import get_generated_summary
 from news.variables import NEWS_HOME_PAGE_URL, NEWS_URL
 from news.models import News
 
@@ -76,8 +77,7 @@ def scrap_news(news_type):
                 continue
             news_details_text = news_details.text
             news_details_text = check_news_details_condition(news_details.text)
-            #summary_gen = summarizer.summarizer_gen(news_details_text)
-            summary = news_details_text
+            summary = get_generated_summary(news_details_text)
             context = create_context_for_news_model(
                 headline_text, summary, img_url, news_type)
             print(f'Adding {headline_text}')

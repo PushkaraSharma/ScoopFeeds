@@ -47,5 +47,9 @@ def delete_data():
             object.delete()
 
 
-
-    
+#To be done Tomorrow
+# - Make docker file using compose
+# - Use travis to build container
+# - Write few tests and run tests on travis
+# - After that write terraform scripts
+# - Add to travis     
