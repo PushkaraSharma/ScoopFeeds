@@ -1,0 +1,13 @@
+language: python
+
+python:
+    - "3.8"
+install:
+    - pipenv install
+services:
+    - docker
+before_script:
+    - cd Backend/
+    - pip install docker-compose
+script:
+    - docker-compose run app sh -c "python manage.py test"
