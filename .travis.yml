@@ -9,11 +9,11 @@ services:
 before_script:
     - cd Backend/
     - pip install docker-compose
-    - docker build -t  pushkarasharma11/scoopFeeds:latest .
-    - docker build -t pushkarasharma11/scoopFeeds:$COMMIT .
+    - docker build -t  pushkarasharma11/scoopfeeds:latest .
+    - docker build -t pushkarasharma11/scoopfeeds:$COMMIT .
 script:
     - docker-compose run web sh -c "python3 Scoopfeeds/manage.py test"
-    - docker push pushkarasharma11/scoopFeeds:latest
-    - docker push pushkarasharma11/scoopFeeds:$COMMIT
+    - docker push pushkarasharma11/scoopfeeds:latest
+    - docker push pushkarasharma11/scoopfeeds:$COMMIT
 before_deploy:
   - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
