@@ -10,4 +10,4 @@ before_script:
     - cd Backend/
     - pip install docker-compose
 script:
-    - docker-compose run app sh -c "python manage.py test"
+    - docker-compose run web sh -c "python3 manage.py test"
