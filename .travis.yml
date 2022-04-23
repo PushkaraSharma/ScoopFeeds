@@ -7,7 +7,7 @@ install:
 services:
     - docker
 before_script:
-    - cd Backend/
+    - cd Backend/Scoopfeeds/
     - pip install docker-compose
 script:
     - docker-compose run web sh -c "python3 manage.py test"
