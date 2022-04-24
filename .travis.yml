@@ -10,10 +10,9 @@ before_script:
     - cd Backend/
     - pip install docker-compose
     - docker build -t  pushkarasharma11/scoopfeeds:latest .
-    - docker build -t pushkarasharma11/scoopfeeds:$TRAVIS_COMMIT .
 script:
     - docker-compose run web sh -c "python3 Scoopfeeds/manage.py test"
+    - docker tag scoopfeeds:latest pushkarasharma11/scoopfeeds:latest
     - docker push pushkarasharma11/scoopfeeds:latest
-    - docker push pushkarasharma11/scoopfeeds:$TRAVIS_COMMIT
 before_deploy:
   - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
