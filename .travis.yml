@@ -10,8 +10,6 @@ before_script:
     - cd Backend/
     - docker build -t scoopfeeds:latest .
 script:
-    - docker login
+    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
     - docker tag scoopfeeds:latest pushkarasharma11/scoopfeeds:latest
     - docker push pushkarasharma11/scoopfeeds:latest
-before_deploy:
-    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
