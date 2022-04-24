@@ -1,0 +1,15 @@
+language: python
+
+python:
+    - "3.8"
+install:
+    - pipenv install
+services:
+    - docker
+before_script:
+    - cd Backend/
+    - docker build -t scoopfeeds:latest .
+script:
+    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
+    - docker tag scoopfeeds:latest pushkarasharma11/scoopfeeds:latest
+    - docker push pushkarasharma11/scoopfeeds:latest

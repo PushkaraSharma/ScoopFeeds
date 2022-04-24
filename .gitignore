@@ -1,0 +1,9 @@
+#Ignore env
+scoopfeeds/
+
+#Ignore python cache files
+*.pyc
+*.pyo
+
+#Ignore db
+*.sqlite3
